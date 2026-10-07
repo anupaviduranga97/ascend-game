@@ -415,8 +415,8 @@ function testCoreColour(c){
   var m={ELEMENTO:"#8bdcff",PYRION:"#ff8c54",AQUION:"#62d8ff",TERRON:"#c8a56c",VYRON:"#ffe66b",UMBRA:"#b78cff",AERIX:"#b9f4ff",VOLTRIX:"#fff078",MECHRON:"#c7d3dc",NEXARA:"#7dffbf"};
   return m[c.origin]||"#8bdcff";
 }
-var ORIGIN_ART={ELEMENTO:"assets/origins2d/elemento.jpg",PYRION:"assets/origins2d/pyrion.jpg",AQUION:"assets/origins2d/aquion.jpg",TERRON:"assets/origins2d/terron.jpg",VYRON:"assets/origins2d/vyron.jpg",UMBRA:"assets/origins2d/umbra.jpg",AERIX:"assets/origins2d/aerix.jpg",VOLTRIX:"assets/origins2d/voltrix.jpg",MECHRON:"assets/origins2d/mechron.jpg",NEXARA:"assets/origins2d/nexara.jpg"};
-function originArt(o){return ORIGIN_ART[o]||"assets/origins2d/elemento.jpg";}
+var ORIGIN_ART={ELEMENTO:"elemento.jpg",PYRION:"pyrion.jpg",AQUION:"aquion.jpg",TERRON:"terron.jpg",VYRON:"vyron.jpg",UMBRA:"umbra.jpg",AERIX:"aerix.jpg",VOLTRIX:"voltrix.jpg",MECHRON:"mechron.jpg",NEXARA:"nexara.jpg"};
+function originArt(o){return ORIGIN_ART[o]||"elemento.jpg";}
 function stageForVisual(c){return Math.max(1,Math.min(5,Number(c.evolutionStage||stageForLevel(c.level)||1)));}
 function visualSkin(c){return c.visualSkin||'ORIGIN';}
 function visualSkinData(c){
