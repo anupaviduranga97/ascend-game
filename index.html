@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ASCEND: Warriors of the Core</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07090d;color:#edf2f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:980px;margin:auto;min-height:100vh;background:#0b0f15}
+header{position:sticky;top:0;z-index:5;background:rgba(9,12,17,.96);backdrop-filter:blur(12px);border-bottom:1px solid #222c39;padding:15px}
+.brand{font-weight:900;letter-spacing:2px;font-size:22px}.tagline{font-size:9px;color:#7f8b9c;letter-spacing:1.3px;margin-top:2px}.resources{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}.res{background:#151c26;border:1px solid #242f3d;padding:6px 8px;border-radius:8px;font-size:11px}
+nav{display:flex;overflow:auto;border-bottom:1px solid #222b36;background:#0a0d12;position:sticky;top:84px;z-index:4}
+nav button{flex:1;min-width:70px;background:none;border:0;color:#788596;padding:11px 6px;font-size:10px;font-weight:800}nav button.active{color:#fff;border-bottom:2px solid #fff}
+main{padding:14px}.card{background:#111720;border:1px solid #26313f;border-radius:15px;padding:14px;margin-bottom:12px}.hero{background:radial-gradient(circle at 70% 20%,#283b50,#111720 55%,#0b0f15);border-radius:18px;padding:25px 16px;text-align:center;border:1px solid #334154;margin-bottom:12px}
+h1,h2,h3{margin:5px 0 10px}h1{font-size:28px}h2{font-size:19px}h3{font-size:14px}.muted{color:#8793a4;font-size:12px}.tiny{font-size:10px;color:#758295}.btn{width:100%;border:0;border-radius:10px;padding:12px;margin-top:8px;background:#e9eef3;color:#07090c;font-weight:900}.btn.alt{background:#202a36;color:#fff}.btn.warn{background:#3a2720;color:#fff}.btn:disabled{opacity:.35}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #202934;font-size:12px}.stat:last-child{border:0}.bar{height:6px;background:#252f3c;border-radius:9px;overflow:hidden;margin-top:4px}.fill{height:100%;background:#dfe6ed}
+.war{border:1px solid #2a3543;border-radius:13px;padding:12px;margin-bottom:9px;background:#0e141c}.war.sel{border-color:#eef3f7;box-shadow:0 0 0 1px #eef3f7 inset}
+.badge{display:inline-block;background:#222c39;border-radius:6px;padding:4px 6px;font-size:9px;margin:2px}.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.avatar{font-size:42px}.origin{font-weight:900;letter-spacing:.6px}.input{width:100%;background:#080b10;border:1px solid #3a4655;color:#fff;padding:12px;border-radius:10px;margin-top:8px}.select{width:100%;background:#080b10;color:#fff;border:1px solid #344050;border-radius:9px;padding:11px}
+.log{height:180px;overflow:auto;background:#080b10;border:1px solid #222c37;border-radius:10px;padding:9px;font-size:11px;line-height:1.55}.enemy{color:#ffb1a6}.good{color:#a9e6b5}.gold{color:#f1d48c}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#eef2f5;color:#080a0d;padding:10px 14px;border-radius:10px;font-weight:800;font-size:12px;z-index:20;display:none;max-width:90%;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:15;display:none;align-items:flex-end}.modalBox{width:100%;max-width:980px;margin:auto;background:#10161f;border:1px solid #303b4a;border-radius:20px 20px 0 0;padding:17px;max-height:88vh;overflow:auto}
+.progress{height:9px;background:#252f3b;border-radius:9px;overflow:hidden}.progress>div{height:100%;background:#e6ebf0}
+.empty{text-align:center;padding:30px 12px;color:#778496}.danger{color:#ff9e91}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}nav button{font-size:11px}.modal{align-items:center}.modalBox{border-radius:18px}}
+
+/* ===== ASCEND CONTINUOUS TEST BUILD ===== */
+.test-card{background:#0b121a;border:1px solid #334454;border-radius:14px;padding:13px;margin:10px 0}
+.test-title{font-size:18px;font-weight:900;margin-bottom:5px}.test-muted{color:#9eabb7;font-size:12px}
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.test-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.test-stat{padding:8px;border:1px solid #263746;border-radius:9px;background:#101923}.test-stat b{display:block;font-size:16px}.test-stat span{font-size:9px;color:#91a0ad}
+.test-war{padding:10px;border:1px solid #304252;border-radius:10px;margin:7px 0}.test-war.sel{border-color:#d9e2e8;background:#15212c}
+.test-war button{margin-top:7px}.test-report{background:#080e14;border:1px solid #334454;border-radius:12px;padding:12px;margin-top:10px}
+.test-win{font-size:22px;font-weight:900}.test-loss{font-size:22px;font-weight:900}
+.test-round{padding:8px 0;border-bottom:1px solid #1f2b36;font-size:11px;line-height:1.45}.test-round:last-child{border-bottom:0}
+.test-reason{padding:9px;border-left:3px solid #aab7c1;background:#111b24;margin:5px 0;font-size:11px}
+.test-code{font-family:monospace;word-break:break-all;background:#060a0e;border:1px solid #334454;border-radius:8px;padding:10px;font-size:11px}
+.test-character{background:radial-gradient(circle at 50% 42%,#315268,#0a1118 63%);height:250px;border-radius:12px;position:relative;overflow:hidden;margin:8px 0}
+.test-body{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:108px;height:175px}
+.test-head{position:absolute;left:30px;top:0;width:48px;height:48px;border-radius:45%;background:linear-gradient(145deg,#e8eef2,#566976 60%,#151e26);border:2px solid #d3dfe5}
+.test-eye{position:absolute;left:36px;top:20px;width:36px;height:7px;border-radius:5px;background:var(--core);box-shadow:0 0 14px var(--core);z-index:3}
+.test-torso{position:absolute;left:11px;top:50px;width:86px;height:92px;background:linear-gradient(145deg,#c7d2da,#526673 45%,#111a22);clip-path:polygon(18% 0,82% 0,100% 25%,84% 100%,16% 100%,0 25%);border:2px solid #aebcc5}
+.test-core{position:absolute;left:39px;top:71px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#fff 0,var(--core) 32%,#235a78 63%,transparent 66%);box-shadow:0 0 24px var(--core);z-index:4}
+.test-arm{position:absolute;top:56px;width:25px;height:85px;border-radius:14px;background:linear-gradient(#738795,#1c2730);border:2px solid #9daeb9}.test-arm.l{left:-5px;transform:rotate(8deg)}.test-arm.r{right:-5px;transform:rotate(-8deg)}
+.test-leg{position:absolute;top:136px;width:30px;height:39px;border-radius:8px;background:#1a252e;border:2px solid #81929e}.test-leg.l{left:23px}.test-leg.r{right:23px}
+.test-weapon{position:absolute;right:0;top:60px;width:8px;height:100px;background:linear-gradient(#fff,var(--core));box-shadow:0 0 13px var(--core);transform:rotate(22deg);z-index:5}
+.test-equip{position:absolute;left:9px;top:48px;width:90px;height:105px;border:4px solid #d5e0e6;border-radius:25px;opacity:.28}
+@media(max-width:420px){.test-grid3{grid-template-columns:1fr 1fr}.test-character{height:230px}}
+
+
+.compact-warrior{position:relative;cursor:pointer;padding:10px;margin-bottom:8px;border:1px solid #263443;border-radius:13px;background:#0d131b}.compact-warrior:active{border-color:#e8edf2}.compact-head{display:flex;align-items:center;gap:10px}.compact-avatar{width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#151e29;border:1px solid #304052;flex:0 0 52px}.compact-main{min-width:0;flex:1}.compact-name{font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.compact-meta{font-size:10px;color:#8290a1;margin-top:3px}.compact-power{font-size:11px;font-weight:900;text-align:right}.compact-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:9px}.compact-stat{background:#111923;border:1px solid #202d3b;border-radius:7px;padding:5px 4px;text-align:center}.compact-stat span{display:block;font-size:7px;color:#778597}.compact-stat b{display:block;font-size:11px;margin-top:2px}.compact-footer{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.compact-chip{font-size:9px;color:#aab6c5;background:#18222e;border-radius:6px;padding:4px 6px}.compact-arrow{font-size:18px;color:#8795a6}.warrior-modal-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.warrior-modal-stat{background:#101821;border:1px solid #263544;border-radius:9px;padding:9px}.warrior-modal-stat span{display:block;font-size:9px;color:#8290a1}.warrior-modal-stat b{font-size:17px}.history-scroll{max-height:260px;overflow:auto;border:1px solid #25303d;border-radius:9px;padding:8px;background:#090d12}.history-row{padding:7px 2px;border-bottom:1px solid #1d2732;font-size:10px;color:#a7b2c0}.history-row:last-child{border-bottom:0}
+
+/* ===== ASCEND FULL GAMEPLAY V7 ===== */
+.slot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.slot{background:#0b1118;border:1px solid #293746;border-radius:9px;padding:8px}.slot b{display:block;font-size:11px}.slot span{font-size:9px;color:#8795a5}.item-mini{background:#101923;border:1px solid #273645;border-radius:9px;padding:9px;margin:6px 0}.recipe{background:#0d141c;border:1px solid #2b3948;border-radius:11px;padding:10px;margin:7px 0}.recipe .cost{font-size:10px;color:#91a0af}.stage-pill{display:inline-block;padding:5px 8px;border-radius:7px;background:#202c39;font-size:9px;font-weight:800}.task{background:#0d141c;border:1px solid #293847;border-radius:10px;padding:10px;margin:7px 0}.task.done{opacity:.6}.dev-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.dev-tabs button{background:#17212c;border:1px solid #293847;color:#dfe6ed;border-radius:8px;padding:9px 4px;font-size:10px;font-weight:800}.dev-tabs button.active{background:#e9eef3;color:#07090d}
+</style>
+
+<meta name="theme-color" content="#07090d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ASCEND">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand">ASCEND</div><div class="tagline">WARRIORS OF THE CORE · BUILD. EVOLVE. MASTER. TRADE. ASCEND.</div>
+ <div id="resources" class="resources"></div>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<div id="modal" class="modal"><div class="modalBox" id="modalBox"></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+"use strict";
+const ORIGINS=[
+{name:"ELEMENTO",trait:"Adaptive / Balanced",icon:"◇",base:[100,50,50,50,50,50,50,70]},
+{name:"PYRION",trait:"Energy / Force",icon:"🔥",base:[95,65,42,48,52,70,48,55]},
+{name:"AQUION",trait:"Recovery / Control",icon:"💧",base:[105,42,55,45,55,65,65,72]},
+{name:"TERRON",trait:"Durability",icon:"◆",base:[115,58,75,32,40,42,62,45]},
+{name:"VYRON",trait:"Velocity",icon:"⚡",base:[90,45,40,78,62,50,45,55]},
+{name:"UMBRA",trait:"Stealth",icon:"◐",base:[88,48,42,68,78,48,45,68]},
+{name:"AERIX",trait:"Mobility / Precision",icon:"△",base:[92,46,44,72,75,52,48,62]},
+{name:"VOLTRIX",trait:"Core Energy",icon:"✦",base:[94,55,45,55,58,82,45,58]},
+{name:"MECHRON",trait:"Equipment Synergy",icon:"▣",base:[100,58,62,45,52,62,50,52]},
+{name:"NEXARA",trait:"Adaptation",icon:"◎",base:[98,50,50,52,55,60,55,85]}
+];
+const STATN=["Vitality","Force","Guard","Velocity","Precision","Core Energy","Recovery","Adaptation"];
+const GEAR=[
+["VOIDBLADE","Weapon"],["TITAN HAMMER","Weapon"],["AETHER SPEAR","Weapon"],["VOLT ARC","Weapon"],["GRAVITY MAUL","Weapon"],
+["TITANFRAME","Armour"],["AEROSHELL","Armour"],["VOIDWEAVE","Armour"],["COREPLATE","Armour"],["AEGIS PRIME","Armour"],
+["NEURAL LINK","Augment"],["ADRENAL CORE","Augment"],["REGEN MATRIX","Augment"],["PHASE CHIP","Augment"],["CORE AMPLIFIER","Augment"]
+];
+const ABILITIES=[
+["CORE STRIKE","Force","A direct Core-powered strike."],["CORE BREAKER","Force","High impact against guarded targets."],
+["PHASE STRIKE","Velocity","A rapid strike that gains initiative."],["INFERNO DASH","Velocity","Movement becomes an attack."],
+["VOID EXECUTION","Precision","Powerful against exposed targets."],["AEGIS OVERDRIVE","Guard","Converts defence into pressure."],
+["REGEN SURGE","Recovery","Restores team condition."],["CORE NOVA","Core Energy","High energy burst with resource cost."],
+["ADAPTIVE SHIFT","Adaptation","Changes tactical advantage."],["GRAVITY LOCK","Guard","Reduces enemy mobility."],
+["NEURAL OVERCLOCK","Precision","Improves critical opportunity."],["PHASE WALL","Guard","Reduces incoming damage."]
+];
+const RARITIES=["Common","Uncommon","Rare","Epic","Legendary","Mythic","Apex"];
+const RANKS=["UNRANKED","BRONZE","SILVER","GOLD","PLATINUM","DIAMOND","ASCENDANT","APEX"];
+const fresh={
+ day:1,credits:100,fragments:3,parts:3,shards:0,prime:0,overcore:0,
+ drops:3,timed:3,training:6,scavenge:5,practice:5,ranked:3,
+ chars:[],inventory:[],history:[],missions:{done:false},rank:0,rating:0,
+ team:[],screen:"home",selected:null,battle:null,created:Date.now(),market:[],battleHistory:[],friendTeams:[],testSelected:{a:null,b:null},testMode:"1v1",dropHistory:[]
+};
+let S=load();
+const SAVE_KEY="ASCEND_SAVE";
+const DB_NAME="ASCEND_CORE_DB";
+const DB_STORE="saves";
+function load(){try{const raw=localStorage.getItem(SAVE_KEY);return Object.assign({},fresh,raw?JSON.parse(raw):{});}catch(e){return {...fresh}}}
+function save(){
+  try{S._saveAt=Date.now();localStorage.setItem(SAVE_KEY,JSON.stringify(S));}catch(e){}
+  try{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=function(){if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE,{keyPath:"key"});};req.onsuccess=function(){try{const db=req.result,tx=db.transaction(DB_STORE,"readwrite");tx.objectStore(DB_STORE).put({key:SAVE_KEY,at:S._saveAt||Date.now(),data:JSON.stringify(S)});tx.oncomplete=function(){db.close()};}catch(e){}};}catch(e){}
+}
+async function restorePersistentSave(){
+  let best=S,bestAt=Number(S._saveAt||0);
+  try{const raw=localStorage.getItem(SAVE_KEY);if(raw){const x=JSON.parse(raw),at=Number(x._saveAt||0);if(at>=bestAt){best=Object.assign({},fresh,x);bestAt=at;}}}catch(e){}
+  try{const rec=await new Promise(function(resolve){let done=false;function finish(v){if(!done){done=true;resolve(v)}}const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=function(){if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE,{keyPath:"key"});};req.onsuccess=function(){try{const db=req.result,tx=db.transaction(DB_STORE,"readonly"),g=tx.objectStore(DB_STORE).get(SAVE_KEY);g.onsuccess=function(){finish(g.result||null)};g.onerror=function(){finish(null)};tx.oncomplete=function(){db.close()};}catch(e){finish(null)}};req.onerror=function(){finish(null)};setTimeout(function(){finish(null)},1200);});if(rec&&Number(rec.at||0)>bestAt){const x=JSON.parse(rec.data);best=Object.assign({},fresh,x);}}catch(e){}
+  S=best;ensureFullGame();render();
+}
+
+function uid(origin){return origin.slice(0,3)+"-"+String(S.chars.length+1).padStart(6,"0")}
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function rarity(){let r=Math.random();return r<.43?"Common":r<.68?"Uncommon":r<.84?"Rare":r<.93?"Epic":r<.975?"Legendary":r<.995?"Mythic":"Apex"}
+function power(c){return Math.round((c.stats.reduce((a,b)=>a+b,0)/8)+c.level*7+c.gear.length*4)}
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display="none",1700)}
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function log(h){S.history.unshift("Day "+S.day+" — "+h);S.history=S.history.slice(0,300)}
+function createWarrior(o,name){
+ let stats=o.base.map((v,i)=>v+rnd(-2,2));
+ let c={id:uid(o.name),origin:o.name,trait:o.trait,icon:o.icon,name:name,stats,level:1,xp:0,condition:100,energy:100,abilities:["CORE STRIKE"],gear:[],createdDay:S.day,battles:0,wins:0,losses:0,history:["Created on Day "+S.day],value:100};
+ S.chars.push(c);log("Created "+o.name+" "+name+" ["+c.id+"]");save();return c;
+}
+function render(){
+ document.getElementById("resources").innerHTML=[
+ ["◈",S.credits],["◇",S.fragments],["⚙",S.parts],["✦",S.shards],["◆",S.prime],["⬢",S.overcore],["DAY",S.day]
+ ].map(x=>`<span class="res">${x[0]} ${x[1]}</span>`).join("");
+ const tabs=[["home","HOME"],["warriors","WARRIORS"],["actions","ACTIONS"],["inventory","INVENTORY"],["battle","ARENA"],["market","MARKET"],["history","CHRONICLE"]];
+ document.getElementById("nav").innerHTML=tabs.map(t=>`<button class="${S.screen===t[0]?"active":""}" onclick="go('${t[0]}')">${t[1]}</button>`).join("");
+ document.getElementById("main").innerHTML=screen();
+}
+function go(x){S.screen=x;render();save()}
+function screen(){switch(S.screen){case"warriors":return warriors();case"actions":return actions();case"inventory":return inventory();case"battle":return arena();case"market":return market();case"history":return history();default:return home()}}
+function home(){
+ return `<section class="hero"><div class="avatar">✦</div><h1>CORE SYSTEM ONLINE</h1><p class="muted">Build Warriors. Develop them. Master the Core. Your progress persists on this device.</p>
+ <button class="btn" onclick="openDrop('daily')" ${S.drops<1?"disabled":""}>OPEN CORE DROP · ${S.drops}/3</button>
+ <button class="btn alt" onclick="openDrop('timed')" ${S.timed<1?"disabled":""}>TIMED SUPPLY DROP · ${S.timed}/3</button><p class="tiny" style="margin-top:12px">Drop tables contain resources, materials, equipment, ability cores and occasional Warrior Cores. Opening a drop does not guarantee a Warrior.</p></section>
+ <div class="grid">${[
+ ["WARRIORS",S.chars.length],["AVG POWER",S.chars.length?Math.round(S.chars.reduce((a,c)=>a+power(c),0)/S.chars.length):0],
+ ["RANK",RANKS[S.rank]],["RATING",S.rating],["TRAINING",S.training+"/6"],["SCAVENGE",S.scavenge+"/5"]
+ ].map(x=>`<div class="card"><div class="muted">${x[0]}</div><h2>${x[1]}</h2></div>`).join("")}</div>
+ <div class="card"><h2>DAILY CORE LOOP</h2><div class="stat"><span>Core Drops</span><b>3/day</b></div><div class="stat"><span>Timed Supply Drops</span><b>3/day</b></div><div class="stat"><span>Training</span><b>6/day</b></div><div class="stat"><span>Scavenge</span><b>5/day</b></div><div class="stat"><span>Practice Battles</span><b>5/day</b></div><div class="stat"><span>Ranked Battles</span><b>3/day</b></div></div>
+ ${S.chars.length?`<div class="card"><h2>ACTIVE WARRIOR</h2>${miniWarrior(S.chars[S.chars.length-1])}</div>`:""}`;
+}
+function miniWarrior(c){return `<div class="row"><div><div class="avatar">${c.icon}</div></div><div style="flex:1"><div class="origin">${esc(c.origin)} ${esc(c.name)}</div><span class="badge">${c.id}</span><span class="badge">LV ${c.level}</span><span class="badge">POWER ${power(c)}</span><div class="progress"><div style="width:${c.condition}%"></div></div><div class="tiny">Condition ${c.condition}% · Energy ${c.energy}%</div></div></div>`}
+function dropTable(kind){
+ return kind==="daily"?[
+  ["resources",34],["materials",22],["equipment",20],["ability",10],["warrior",8],["rare",6]
+ ]:[
+  ["equipment",34],["resources",20],["materials",18],["ability",14],["warrior",9],["rare",5]
+ ];
+}
+function chooseDropType(kind){
+ let roll=Math.random()*100,acc=0;
+ for(const x of dropTable(kind)){acc+=x[1];if(roll<acc)return x[0]}
+ return "resources";
+}
+function makeEquipment(){
+ let base=GEAR[rnd(0,GEAR.length-1)],r=rarity(),mult=RARITIES.indexOf(r)+1;
+ let g={id:"ITM-"+Date.now().toString(36).toUpperCase()+"-"+rnd(100,999),name:base[0],type:base[1],rarity:r,condition:100,bonus:rnd(2,6)*mult,sell:Math.max(3,Math.round(mult*7)),source:"Drop"};
+ S.inventory.push(g);return g;
+}
+function generateDropReward(kind){
+ let type=chooseDropType(kind);
+ if(type==="warrior"){
+  let o=ORIGINS[rnd(0,ORIGINS.length-1)];
+  return {type:"warrior",origin:o,name:o.name,trait:o.trait,icon:o.icon};
+ }
+ if(type==="equipment"){let g=makeEquipment();return {type:"equipment",item:g};}
+ if(type==="ability"){
+  let pool=ABILITIES.filter(a=>!S.chars.some(c=>c.abilities.includes(a[0])));
+  let a=pool.length?pool[rnd(0,pool.length-1)]:ABILITIES[rnd(0,ABILITIES.length-1)];
+  let core={id:"ABL-"+Date.now().toString(36).toUpperCase()+"-"+rnd(100,999),name:a[0],description:a[1],affinity:a[2],type:"Ability Core"};
+  S.inventory.push(core);return {type:"ability",item:core};
+ }
+ if(type==="materials"){
+  let rewards=[];
+  let parts=rnd(1,4),fr=rnd(1,3);S.parts+=parts;S.fragments+=fr;rewards.push("+"+parts+" Tech Parts","+"+fr+" Core Fragments");
+  if(Math.random()<.3){S.shards+=1;rewards.push("+1 Aether Shard")}
+  return {type:"resources",title:"CORE MATERIALS",lines:rewards};
+ }
+ if(type==="rare"){
+  let r=Math.random()<.5?"shards":"prime";
+  if(r==="shards"){let n=rnd(1,2);S.shards+=n;return {type:"resources",title:"AETHER SHARDS",lines:["+"+n+" Aether Shards"]}}
+  let n=1;S.prime+=n;return {type:"resources",title:"PRIME MATTER",lines:["+"+n+" Prime Matter"]};
+ }
+ let cr=rnd(8,22);S.credits+=cr;let fr=Math.random()<.65?rnd(1,2):0;S.fragments+=fr;
+ return {type:"resources",title:"CORE RESOURCES",lines:["+"+cr+" Credits"].concat(fr?["+"+fr+" Core Fragments"]:[])};
+}
+function openDrop(kind){
+ if(kind==="daily"&&S.drops<=0)return;
+ if(kind==="timed"&&S.timed<=0)return;
+ if(kind==="daily")S.drops--;else S.timed--;
+ let reward=generateDropReward(kind);
+ S.dropHistory=S.dropHistory||[];
+ S.dropHistory.unshift({day:S.day,kind:kind,type:reward.type});S.dropHistory=S.dropHistory.slice(0,100);
+ if(reward.type==="warrior"){S.pending={origin:reward.origin,kind,dropReward:reward};save();namingModal();return}
+ save();showDropReward(kind,reward);
+}
+function showDropReward(kind,reward){
+ let title=kind==="daily"?"DAILY CORE DROP":"TIMED SUPPLY DROP";
+ let body="";
+ if(reward.type==="equipment"){let g=reward.item;body=`<div class="hero"><div class="avatar">⚙</div><div class="muted">EQUIPMENT ACQUIRED</div><h1>${esc(g.name)}</h1><p><span class="badge">${esc(g.rarity)}</span> <span class="badge">${esc(g.type)}</span></p></div><div class="card"><div class="stat"><span>Condition</span><b>${g.condition}%</b></div><div class="stat"><span>Power Bonus</span><b>+${g.bonus}</b></div><div class="stat"><span>Sell Value</span><b>◈ ${g.sell}</b></div></div>`}
+ else if(reward.type==="ability"){let a=reward.item;body=`<div class="hero"><div class="avatar">✦</div><div class="muted">ABILITY CORE ACQUIRED</div><h1>${esc(a.name)}</h1><p>${esc(a.description)}</p></div><div class="card"><b>Affinity</b><p class="tiny">${esc(a.affinity)}</p><p class="tiny">Stored in Inventory. Research/learn it when ready.</p></div>`}
+ else body=`<div class="hero"><div class="avatar">◆</div><div class="muted">REWARD ACQUIRED</div><h1>${esc(reward.title||"CORE REWARD")}</h1>${reward.lines.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`;
+ document.getElementById("modalBox").innerHTML=`<div class="test-card"><div class="test-title">${title}</div>${body}<p class="tiny">Warrior Cores are only one possible reward. Drops can also provide resources, materials, equipment and ability cores.</p><button class="btn" onclick="closeModal();render()">CONTINUE</button></div>`;showModal();
+}
+function namingModal(){
+ let p=S.pending,o=p.origin;
+ document.getElementById("modalBox").innerHTML=`<div class="hero"><div class="avatar">${o.icon}</div><div class="muted">WARRIOR CORE DISCOVERED</div><h1>${o.name}</h1><p>${o.trait}</p><p class="tiny">This drop produced a Warrior Core. Warrior Cores are only one part of the drop system.</p></div>
+ <h3>Choose the permanent Warrior name</h3><input id="warriorName" class="input" maxlength="20" placeholder="e.g. APEX, REX, NOVA">
+ <button class="btn" onclick="confirmWarrior()">CREATE WARRIOR</button><button class="btn alt" onclick="closeModal()">CANCEL</button>`;
+ showModal();
+}
+function confirmWarrior(){
+ let n=document.getElementById("warriorName").value.trim();
+ if(!n){toast("Enter a Warrior name");return}
+ let c=createWarrior(S.pending.origin,n.toUpperCase());S.pending=null;closeModal();S.selected=c.id;go("warriors");toast(c.origin+" "+c.name+" created");
+}
+function showModal(){document.getElementById("modal").style.display="flex"}function closeModal(){document.getElementById("modal").style.display="none";document.getElementById("modalBox").innerHTML=""}
+function warriors(){
+ if(!S.chars.length)return `<div class="card empty"><h2>No Warriors</h2><p>Open a Core Drop to create your first permanent Warrior.</p><button class="btn" onclick="go('home')">OPEN CORE DROP</button></div>`;
+ return S.chars.map((c,i)=>`<div class="war ${S.team.includes(c.id)?"sel":""}">${miniWarrior(c)}
+ <div class="grid" style="margin-top:10px">${c.stats.map((v,j)=>`<div><div class="stat"><span>${STATN[j]}</span><b>${v}</b></div><div class="bar"><div class="fill" style="width:${Math.min(100,v)}%"></div></div></div>`).join("")}</div>
+ <p class="tiny">Abilities: ${c.abilities.join(" · ")}<br>Gear: ${c.gear.length?c.gear.join(" · "):"None"}<br>History: ${c.history.slice(-3).join(" | ")}</p>
+ <button class="btn" onclick="openTraining('${c.id}')" ${S.training<1?"disabled":""}>TRAIN · ${S.training}/6</button>
+ <button class="btn alt" onclick="selectTeam('${c.id}')">${S.team.includes(c.id)?"REMOVE FROM TEAM":"ADD TO 5v5 TEAM"}</button>
+ <button class="btn alt" onclick="openCharacter('${c.id}')">CHARACTER RECORD</button></div>`).join("");
+}
+function openCharacter(id){
+ let c=S.chars.find(x=>x.id===id);S.selected=id;
+ document.getElementById("modalBox").innerHTML=`<div class="hero"><div class="avatar">${c.icon}</div><h1>${esc(c.origin)} ${esc(c.name)}</h1><span class="badge">${c.id}</span><span class="badge">LEVEL ${c.level}</span><span class="badge">POWER ${power(c)}</span></div>
+ <div class="card"><h3>CORE PROGRESSION</h3><div class="progress"><div style="width:${c.xp}%"></div></div><p class="tiny">${c.xp}/100 XP · Infinite progression</p><div class="stat"><span>Condition</span><b>${c.condition}%</b></div><div class="stat"><span>Energy</span><b>${c.energy}%</b></div><div class="stat"><span>Wins</span><b>${c.wins}</b></div><div class="stat"><span>Losses</span><b>${c.losses}</b></div><div class="stat"><span>Estimated Value</span><b>◈ ${c.value}</b></div></div>
+ <div class="card"><h3>PERMANENT HISTORY</h3>${c.history.map(h=>`<p class="tiny">• ${esc(h)}</p>`).join("")}</div><button class="btn" onclick="closeModal()">CLOSE</button>`;
+ showModal();
+}
+function openTraining(id){
+ let c=S.chars.find(x=>x.id===id);
+ document.getElementById("modalBox").innerHTML=`<h2>TRAIN ${c.origin} ${c.name}</h2><p class="muted">Choose one discipline. Training is permanent and recorded.</p>
+ ${[["Force",1],["Guard",2],["Velocity",3],["Precision",4],["Core Energy",5],["Recovery",6],["Adaptation",7]].map(x=>`<button class="btn alt" onclick="train('${id}',${x[1]})">${x[0]} TRIAL · +3</button>`).join("")}<button class="btn" onclick="closeModal()">CANCEL</button>`;showModal();
+}
+function train(id,idx){
+ if(S.training<=0){toast("No training sessions left today");return}
+ let c=S.chars.find(x=>x.id===id);c.stats[idx]+=3;c.xp+=20;S.training--;c.value+=5;c.history.push("Day "+S.day+": "+STATN[idx]+" Trial +3");
+ if(c.xp>=100){c.xp-=100;c.level++;c.value+=25;c.history.push("Reached Level "+c.level);log(c.name+" reached Level "+c.level)}
+ log(c.name+" completed "+STATN[idx]+" training");closeModal();save();render();toast("Training complete");
+}
+function actions(){
+ return `<div class="card"><h2>DAILY ACTIONS</h2><button class="btn" onclick="go('warriors')">TRAIN WARRIORS · ${S.training}/6</button><button class="btn alt" onclick="scavenge()" ${S.scavenge<1||!S.chars.length?"disabled":""}>SCAVENGE · ${S.scavenge}/5</button><button class="btn alt" onclick="dailyMission()" ${S.missions.done?"disabled":""}>DAILY MISSION · ${S.missions.done?"COMPLETED":"READY"}</button><button class="btn alt" onclick="maintenance()">MAINTENANCE / REPAIR</button><button class="btn alt" onclick="abilityResearch()">ABILITY RESEARCH</button><button class="btn alt" onclick="nextDay()">END DAY → DAY ${S.day+1}</button></div><div class="card"><h2>🧪 CONTINUOUS TEST HUB</h2><p class="muted">Test the full loop without waiting: Day simulation, own 1v1, own 5v5, Friend 1v1, Friend 5v5, battle reports and Warrior evolution.</p><button class="btn" onclick="go('battle')">OPEN BATTLE & DAY TEST CENTER</button><button class="btn alt" onclick="nextDay()">SIMULATE NEXT DAY NOW → DAY ${S.day+1}</button></div>
+ <div class="card"><h2>LONG-TERM TASKS</h2><p class="muted">Up to 3 active tasks: Training, Scavenge, Maintenance, Ability, Exploration, Collection and Challenge.</p><div class="grid3">${["TRAINING","SCAVENGE","MAINTENANCE","ABILITY","EXPLORATION","PRESTIGE"].map(x=>`<div class="war"><b>${x}</b><div class="tiny">Available</div></div>`).join("")}</div></div>`;
+}
+function scavenge(){
+ if(!S.chars.length||S.scavenge<=0)return;S.scavenge--;
+ let cr=rnd(5,14),pt=rnd(1,3),fr=Math.random()<.5?1:0;S.credits+=cr;S.parts+=pt;S.fragments+=fr;
+ if(Math.random()<.12)S.shards++;log("Scavenge: +"+cr+" Credits, +"+pt+" Parts, +"+fr+" Fragments");save();render();toast("Scavenge completed");
+}
+function dailyMission(){
+ if(S.missions.done)return;S.missions.done=true;let cr=rnd(15,30);S.credits+=cr;S.fragments++;S.xp=(S.xp||0)+50;log("Daily Mission completed: +"+cr+" Credits +1 Fragment");save();render();toast("Mission completed");
+}
+function maintenance(){
+ if(!S.chars.length)return;
+ document.getElementById("modalBox").innerHTML=`<h2>MAINTENANCE</h2><p class="muted">Repair all Warriors for Tech Parts.</p>${S.chars.map(c=>`<div class="war"><b>${c.name}</b><span class="badge">${c.condition}%</span><button class="btn alt" onclick="repair('${c.id}')">REPAIR · ${Math.max(1,Math.ceil((100-c.condition)/15))} PARTS</button></div>`).join("")}<button class="btn" onclick="closeModal()">CLOSE</button>`;showModal();
+}
+function repair(id){
+ let c=S.chars.find(x=>x.id===id),cost=Math.max(1,Math.ceil((100-c.condition)/15));if(S.parts<cost){toast("Not enough Tech Parts");return}S.parts-=cost;c.condition=100;c.history.push("Day "+S.day+": repaired");log(c.name+" repaired");save();maintenance();render();
+}
+function abilityResearch(){
+ if(!S.chars.length)return;let c=S.chars.find(x=>x.id===S.selected)||S.chars[0];
+ let available=ABILITIES.filter(a=>!c.abilities.includes(a[0]));
+ document.getElementById("modalBox").innerHTML=`<h2>ABILITY RESEARCH</h2><p class="muted">Research costs Fragments. Abilities are generated from stat affinities.</p>${available.slice(0,8).map(a=>`<div class="war"><b>${a[0]}</b><div class="tiny">${a[1]} · ${a[2]}</div><button class="btn alt" onclick="learnAbility('${c.id}','${a[0]}')">LEARN · 2 FRAGMENTS</button></div>`).join("")}<button class="btn" onclick="closeModal()">CLOSE</button>`;showModal();
+}
+function learnAbility(id,name){if(S.fragments<2){toast("Need 2 Fragments");return}let c=S.chars.find(x=>x.id===id);if(c.abilities.includes(name))return;S.fragments-=2;c.abilities.push(name);c.value+=15;c.history.push("Learned "+name);log(c.name+" learned "+name);save();abilityResearch();toast(name+" learned")}
+function inventory(){
+ if(!S.inventory.length)return `<div class="card empty"><h2>Inventory Empty</h2><p>Open Supply Drops, complete missions and scavenge to build your equipment collection.</p><button class="btn" onclick="openDrop('timed')" ${S.timed<1?"disabled":""}>OPEN SUPPLY DROP</button></div>`;
+ return `<div class="card"><h2>EQUIPMENT</h2>${S.inventory.map((g,i)=>`<div class="war"><div class="row"><div><b>${g.name}</b><div><span class="badge">${g.rarity}</span><span class="badge">${g.type}</span></div></div><div>⚙ ${g.condition}%</div></div><button class="btn alt" onclick="equipItem(${i})">EQUIP / ASSIGN</button><button class="btn warn" onclick="sellItem(${i})">SELL · ◈ ${g.sell}</button></div>`).join("")}</div>`;
+}
+function addGear(){
+ let base=GEAR[rnd(0,GEAR.length-1)],r=rarity(),mult=RARITIES.indexOf(r)+1;
+ let g={name:base[0],type:base[1],rarity:r,condition:100,bonus:rnd(2,6)*mult,sell:Math.max(3,Math.round(mult*7))};
+ S.inventory.push(g);log("Received "+r+" "+g.name);save();
+}
+function equipItem(i){
+ if(!S.chars.length){toast("Create a Warrior first");return}
+ let c=S.chars.find(x=>x.id===S.selected)||S.chars[0],g=S.inventory[i];if(!c.gear.includes(g.name))c.gear.push(g.name);
+ c.value+=g.bonus;c.history.push("Equipped "+g.name);log(c.name+" equipped "+g.name);save();render();toast(g.name+" equipped");
+}
+function sellItem(i){let g=S.inventory[i];S.credits+=g.sell;S.inventory.splice(i,1);log("Sold "+g.name+" for "+g.sell+" Credits");save();render()}
+function selectTeam(id){if(S.team.includes(id))S.team=S.team.filter(x=>x!==id);else if(S.team.length<5)S.team.push(id);else toast("Maximum 5 Warriors");save();render()}
+function arena(){
+ if(!S.chars.length)return `<div class="card empty"><h2>Arena Locked</h2><p>Create Warriors first.</p></div>`;
+ if(S.battle)return battleScreen();
+ return `<div class="card"><h2>5v5 CORE ARENA</h2><p class="muted">Choose up to five Warriors. Build composition matters. Power helps; strategy decides.</p>
+ ${S.chars.map(c=>`<div class="war ${S.team.includes(c.id)?"sel":""}" onclick="selectTeam('${c.id}')">${miniWarrior(c)}</div>`).join("")}
+ <p><b>TEAM ${S.team.length}/5</b></p><button class="btn" onclick="startBattle(false)" ${S.team.length<1||S.practice<1?"disabled":""}>PRACTICE BATTLE · ${S.practice}/5</button>
+ <button class="btn alt" onclick="startBattle(true)" ${S.team.length<1||S.ranked<1?"disabled":""}>RANKED BATTLE · ${S.ranked}/3</button></div>
+ <div class="card"><h3>RANK</h3><div class="row"><b>${RANKS[S.rank]}</b><b>${S.rating} Rating</b></div><div class="progress"><div style="width:${Math.min(100,S.rating%100)}%"></div></div></div>`;
+}
+function startBattle(ranked){
+ if(ranked){if(S.ranked<=0)return;S.ranked--}else{if(S.practice<=0)return;S.practice--}
+ let team=S.team.map(id=>S.chars.find(c=>c.id===id)).filter(Boolean),pp=team.reduce((a,c)=>a+power(c),0);
+ let enemy=Math.round(pp*rnd(80,125)/100);S.battle={ranked,enemyPower:enemy,enemyHp:100,turn:1,guard:0,log:["Battle started. Enemy Power: "+enemy],used:false};save();render();
+}
+function battleScreen(){
+ let b=S.battle,team=S.team.map(id=>S.chars.find(c=>c.id===id)).filter(Boolean);
+ return `<div class="card"><div class="row"><div><b>YOUR TEAM</b><div class="tiny">Power ${team.reduce((a,c)=>a+power(c),0)}</div></div><b>VS</b><div><b>RIVAL</b><div class="tiny">Power ${b.enemyPower}</div></div></div>
+ <p>Rival Integrity: <b>${b.enemyHp}%</b></p><div class="progress"><div style="width:${b.enemyHp}%"></div></div>
+ <div class="log" style="margin-top:10px">${b.log.slice(-12).map(x=>`<div>${esc(x)}</div>`).join("")}</div>
+ <div class="grid">${["ATTACK","ABILITY","DEFEND","CHARGE","TACTICAL","ITEM"].map(a=>`<button class="btn ${a==="ATTACK"?"":"alt"}" onclick="battleAction('${a}')">${a}</button>`).join("")}</div></div>`;
+}
+function battleAction(action){
+ let b=S.battle,team=S.team.map(id=>S.chars.find(c=>c.id===id)).filter(Boolean);if(!b)return;
+ let avg=team.reduce((a,c)=>a+power(c),0)/Math.max(1,team.length), bonus={ATTACK:1,ABILITY:1.25,DEFEND:.65,CHARGE:1.1,TACTICAL:1.0,ITEM:.8}[action];
+ let precision=team.reduce((a,c)=>a+c.stats[4],0)/Math.max(1,team.length),velocity=team.reduce((a,c)=>a+c.stats[3],0)/Math.max(1,team.length);
+ let crit=Math.random()<(precision/250),dmg=Math.max(2,Math.round(avg/12*bonus*(.75+Math.random()*.55)*(crit?1.7:1)));
+ if(action==="ITEM")dmg+=5;
+ if(action==="TACTICAL"&&Math.random()<.55)dmg+=Math.round(velocity/10);
+ b.enemyHp=Math.max(0,b.enemyHp-dmg);b.log.push("Turn "+b.turn+": "+action+" dealt "+dmg+(crit?" CRITICAL":"")+" damage.");
+ if(b.enemyHp<=0){finishBattle(true);return}
+ let guard=action==="DEFEND"?.45:action==="TACTICAL"?.8:1;
+ let incoming=Math.max(2,Math.round((b.enemyPower/15)*(.65+Math.random()*.6)*guard));
+ b.log.push("Rival counterattack caused "+incoming+" pressure.");
+ team.forEach(c=>{c.condition=Math.max(0,c.condition-Math.max(1,Math.round(incoming/team.length)));c.energy=Math.max(0,c.energy-rnd(2,6));c.battles++});
+ b.turn++;save();render();
+}
+function finishBattle(win){
+ let b=S.battle,team=S.team.map(id=>S.chars.find(c=>c.id===id)).filter(Boolean);
+ team.forEach(c=>{if(win){c.wins++;c.xp+=30;c.value+=10}else c.losses++;c.condition=Math.max(0,c.condition-5);c.energy=Math.max(0,c.energy-5);c.history.push("Day "+S.day+": "+(win?"Victory":"Defeat")+" in "+(b.ranked?"Ranked":"Practice")+" battle")});
+ if(win){let reward=b.ranked?35:12;S.credits+=reward;S.fragments+=b.ranked?1:0;if(b.ranked){S.rating+=20;if(S.rating>=100&&S.rank<RANKS.length-1){S.rating-=100;S.rank++;log("Rank advanced to "+RANKS[S.rank])}}log((b.ranked?"Ranked ":"Practice ")+"Victory: +"+reward+" Credits")}else{if(b.ranked)S.rating=Math.max(0,S.rating-8);log((b.ranked?"Ranked ":"Practice ")+"Defeat")}
+ S.battle=null;save();render();toast(win?"VICTORY!":"DEFEAT — Warriors preserved");
+}
+function market(){
+ return `<div class="card"><h2>CORE MARKET</h2><p class="muted">Prototype trading system. Real-money trading is intentionally disabled. Characters retain their history when transferred.</p>
+ ${S.chars.length?S.chars.map(c=>`<div class="war"><div class="row"><b>${c.origin} ${c.name}</b><b>◈ ${c.value}</b></div><div class="tiny">${c.id} · Power ${power(c)} · Level ${c.level}</div><button class="btn alt" onclick="listCharacter('${c.id}')">LIST FOR IN-GAME TRADE</button></div>`).join(""):"<p class='empty'>Create a Warrior first.</p>"}</div>
+ <div class="card"><h3>MARKET RULES</h3><p class="tiny">Ownership changes must preserve Character ID, creation history, training history, equipment history and achievements. Future real-money marketplace features require separate legal, payment and platform systems.</p></div>`;
+}
+function listCharacter(id){let c=S.chars.find(x=>x.id===id);if(!c)return;let price=Math.max(50,Math.round(c.value));S.market.push({id,name:c.name,origin:c.origin,price});log(c.name+" listed for "+price+" Credits");save();toast("Listed at "+price+" Credits")}
+function history(){
+ return `<div class="card"><h2>CHRONICLE</h2>${S.history.length?S.history.slice(0,80).map(x=>`<p class="tiny">• ${esc(x)}</p>`).join(""):"<p class='empty'>Your history will appear here.</p>"}</div>
+ <div class="card"><h2>LEADERBOARDS</h2>${["Global Power","Ranked Rating","Character Development","Collection","Training","Tournament Prestige"].map((x,i)=>`<div class="stat"><span>${x}</span><b>${i===0?S.chars.reduce((a,c)=>Math.max(a,power(c)),0):i===1?S.rating:i===2?S.chars.reduce((a,c)=>a+c.level,0):S.inventory.length}</b></div>`).join("")}</div>
+ <div class="card"><h3>ACCOUNT</h3><p class="tiny">Day ${S.day} · ${S.chars.length} Warriors · ${S.inventory.length} Items · Rank ${RANKS[S.rank]}</p><button class="btn warn" onclick="resetGame()">RESET LOCAL GAME</button></div>`;
+}
+function nextDay(){
+ S.day++;S.drops=3;S.timed=3;S.training=6;S.scavenge=5;S.practice=5;S.ranked=3;S.missions={done:false};
+ S.chars.forEach(c=>{c.energy=Math.min(100,c.energy+25);c.condition=Math.min(100,c.condition+10)});
+ log("New day started. Daily systems restored.");save();render();toast("Day "+S.day+" started");
+}
+function resetGame(){if(confirm("Reset the entire ASCEND save on this device?")){localStorage.removeItem(SAVE_KEY);try{const req=indexedDB.open(DB_NAME,1);req.onsuccess=function(){const db=req.result;if(db.objectStoreNames.contains(DB_STORE)){const tx=db.transaction(DB_STORE,"readwrite");tx.objectStore(DB_STORE).delete(SAVE_KEY);tx.oncomplete=function(){db.close()}}else db.close()}}catch(e){}S={...fresh};ensureFullGame();save();render()}}
+setInterval(()=>save(),10000);
+render();
+
+/* ===== ASCEND CONTINUOUS TEST BUILD ENGINE ===== */
+function ensureTestState(){
+  if(!S.battleHistory)S.battleHistory=[];
+  if(!S.friendTeams)S.friendTeams=[];
+  if(!S.testSelected)S.testSelected={a:null,b:null};
+  if(!S.testMode)S.testMode="1v1";
+  S.chars.forEach(function(c){
+    if(!c.battles)c.battles=0;if(!c.wins)c.wins=0;if(!c.losses)c.losses=0;
+    if(!c.history)c.history=[];if(!c.abilities||!c.abilities.length)c.abilities=["CORE STRIKE"];
+    if(c.ascSkin===undefined)c.ascSkin=0;
+  });
+}
+function testPower(c){
+  var st=c.stats||[50,50,50,50,50,50,50,50];
+  var eq=0;
+  (c.gear||[]).forEach(function(n){
+    var g=S.inventory.find(function(x){return x.name===n});
+    if(g)eq+=Math.round((g.bonus||0)*(Math.max(20,g.condition||100)/100));
+  });
+  return Math.round(st.reduce(function(a,b){return a+b},0)/8+(c.level||1)*7+eq+(c.condition||100)/10+(c.energy||100)/12);
+}
+function testAbility(c){
+  var list=c.abilities||["CORE STRIKE"];
+  return list[Math.floor(Math.random()*list.length)]||"CORE STRIKE";
+}
+function testSnapshot(c){
+  return {id:c.id,origin:c.origin,name:c.name,trait:c.trait,icon:c.icon,stats:c.stats.slice(),level:c.level,xp:c.xp,condition:c.condition,energy:c.energy,abilities:(c.abilities||[]).slice(),gear:(c.gear||[]).slice(),ascSkin:c.ascSkin||0,value:c.value||100};
+}
+function testCoreColour(c){
+  var m={ELEMENTO:"#8bdcff",PYRION:"#ff8c54",AQUION:"#62d8ff",TERRON:"#c8a56c",VYRON:"#ffe66b",UMBRA:"#b78cff",AERIX:"#b9f4ff",VOLTRIX:"#fff078",MECHRON:"#c7d3dc",NEXARA:"#7dffbf"};
+  return m[c.origin]||"#8bdcff";
+}
+function testVisual(c){
+  var stage=(c.level>=50?5:c.level>=25?4:c.level>=10?3:c.level>=5?2:1);
+  var core=testCoreColour(c);
+  return '<div class="test-character" style="--core:'+core+'"><div class="test-body">'+
+    '<div class="test-head"></div><div class="test-eye"></div><div class="test-torso"></div><div class="test-core"></div>'+
+    '<div class="test-arm l"></div><div class="test-arm r"></div><div class="test-leg l"></div><div class="test-leg r"></div>'+
+    (stage>=3?'<div class="test-equip"></div>':'')+(stage>=2?'<div class="test-weapon"></div>':'')+
+    '</div><div class="badge" style="position:absolute;top:9px;left:9px">'+["","ORIGIN","AWAKENED","DEVELOPED","CORE EVOLVED","ASCENDED"][stage]+'</div>'+
+    '<div class="badge" style="position:absolute;bottom:9px;right:9px">'+(c.origin||"WARRIOR")+'</div></div>';
+}
+function testCard(c,side){
+  return '<div class="test-card"><div class="row"><div><b>'+esc(c.origin)+' '+esc(c.name)+'</b><div class="tiny">'+esc(c.id)+' · LV '+c.level+'</div></div><b>POWER '+testPower(c)+'</b></div>'+
+    testVisual(c)+'<div class="test-grid3">'+c.stats.map(function(v,i){return '<div class="test-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join("")+'</div>'+
+    '<p class="tiny">Abilities: '+(c.abilities||[]).join(" · ")+'<br>Gear: '+((c.gear||[]).length?(c.gear||[]).join(" · "):"None")+'<br>Condition '+c.condition+'% · Energy '+c.energy+'%</p></div>';
+}
+function testOwnWarriors(){
+  return S.chars.map(function(c){
+    var a=S.testSelected.a===c.id,b=S.testSelected.b===c.id;
+    return '<div class="test-war '+(a||b?"sel":"")+'"><div class="row"><div><b>'+esc(c.origin)+' '+esc(c.name)+'</b><div class="tiny">'+c.id+' · LV '+c.level+' · Power '+testPower(c)+'</div></div><div>'+c.wins+'W / '+c.losses+'L</div></div>'+
+      '<button class="btn '+(a?"":"alt")+'" onclick="testPick(\'a\',\''+c.id+'\')">'+(a?"PLAYER 1 SELECTED":"SELECT PLAYER 1")+'</button>'+
+      '<button class="btn '+(b?"":"alt")+'" onclick="testPick(\'b\',\''+c.id+'\')">'+(b?"PLAYER 2 SELECTED":"SELECT PLAYER 2")+'</button></div>';
+  }).join("");
+}
+function testPick(side,id){S.testSelected[side]=id;save();render()}
+function testMatch(a,b){
+  var A=JSON.parse(JSON.stringify(a)),B=JSON.parse(JSON.stringify(b));
+  var log=[],scoreA=0,scoreB=0, hpA=100,hpB=100, rounds=0;
+  var factors={A:{force:A.stats[1],guard:A.stats[2],velocity:A.stats[3],precision:A.stats[4],core:A.stats[5],recovery:A.stats[6],adaptation:A.stats[7]},B:{force:B.stats[1],guard:B.stats[2],velocity:B.stats[3],precision:B.stats[4],core:B.stats[5],recovery:B.stats[6],adaptation:B.stats[7]}};
+  var pA=testPower(A),pB=testPower(B);
+  while(hpA>0&&hpB>0&&rounds<12){
+    rounds++;
+    var first=factors.A.velocity>=factors.B.velocity?"A":"B";
+    var order=first==="A"?["A","B"]:["B","A"];
+    order.forEach(function(x){
+      if(hpA<=0||hpB<=0)return;
+      var atk=x==="A"?A:B,def=x==="A"?B:A,af=x==="A"?factors.A:factors.B,df=x==="A"?factors.B:factors.A;
+      var ability=testAbility(atk);
+      var base=(af.force*.55+af.precision*.25+af.core*.20)+(pA>pB&&x==="A"?2:pB>pA&&x==="B"?2:0);
+      var mitigation=Math.max(12,df.guard*.34+df.adaptation*.12);
+      var crit=Math.random()<Math.min(.28,af.precision/500);
+      var dmg=Math.max(4,Math.round((base-mitigation)*(crit?1.55:1)*(0.88+Math.random()*.24)));
+      if(ability==="PHASE SHIFT")dmg=Math.round(dmg*.85);
+      if(ability==="REGEN MATRIX"){if(x==="A")hpA=Math.min(100,hpA+7);else hpB=Math.min(100,hpB+7);}
+      if(ability==="AEGIS OVERDRIVE")dmg=Math.round(dmg*1.15);
+      if(x==="A")hpB=Math.max(0,hpB-dmg);else hpA=Math.max(0,hpA-dmg);
+      log.push("Round "+rounds+": "+atk.name+" used "+ability+" for "+dmg+" "+(crit?"critical ":"")+"damage. "+def.name+" at "+(x==="A"?hpB:hpA)+"%.");
+    });
+  }
+  var win=hpA>hpB?"A":hpB>hpA?"B":"A";
+  var winner=win==="A"?A:B,loser=win==="A"?B:A;
+  var reasons=[];
+  var pairs=[["Force",factors.A.force,factors.B.force],["Guard",factors.A.guard,factors.B.guard],["Velocity",factors.A.velocity,factors.B.velocity],["Precision",factors.A.precision,factors.B.precision],["Core Energy",factors.A.core,factors.B.core],["Recovery",factors.A.recovery,factors.B.recovery],["Adaptation",factors.A.adaptation,factors.B.adaptation]];
+  pairs.forEach(function(x){if(Math.abs(x[1]-x[2])>=5)reasons.push(x[0]+" advantage: "+(x[1]>x[2]?A.name:B.name)+" ("+Math.max(x[1],x[2])+" vs "+Math.min(x[1],x[2])+")")});
+  reasons.push("Overall build power: "+A.name+" "+pA+" vs "+B.name+" "+pB);
+  if(A.gear.length||B.gear.length)reasons.push("Equipment was included using current gear and condition.");
+  reasons.push("Ability usage and controlled battle variance affected individual exchanges.");
+  return {winner:win,winnerName:winner.name,loserName:loser.name,hpA:hpA,hpB:hpB,rounds:rounds,log:log,reasons:reasons};
+}
+function testApplyResult(ca,cb,res,type){
+  var winA=res.winner==="A";
+  ca.battles++;cb.battles++;
+  if(winA){ca.wins++;cb.losses++;ca.xp+=30;cb.xp+=10}else{cb.wins++;ca.losses++;cb.xp+=30;ca.xp+=10}
+  ca.condition=Math.max(0,ca.condition-5);cb.condition=Math.max(0,cb.condition-5);
+  ca.energy=Math.max(0,ca.energy-5);cb.energy=Math.max(0,cb.energy-5);
+  [ca,cb].forEach(function(c){while(c.xp>=100){c.xp-=100;c.level++;c.value+=25;c.history.push("Day "+S.day+": Reached Level "+c.level)}});
+  ca.history.push("Day "+S.day+": "+(winA?"Victory":"Defeat")+" in "+type+" 1v1");
+  cb.history.push("Day "+S.day+": "+(winA?"Defeat":"Victory")+" in "+type+" 1v1");
+}
+function testReport(title,res){
+  return '<div class="test-report"><div class="'+(res.winner==="A"?"test-win":"test-loss")+'">🏆 '+esc(res.winnerName)+' WINS</div><p class="tiny">'+esc(title)+' · '+res.rounds+' rounds · Final integrity: '+esc(res.winner==="A"?String(res.hpA):String(res.hpB))+'%</p>'+
+    '<h3>WHY THE RESULT HAPPENED</h3>'+res.reasons.map(function(x){return '<div class="test-reason">'+esc(x)+'</div>'}).join("")+
+    '<h3>BATTLE LOG</h3><div>'+res.log.map(function(x){return '<div class="test-round">'+esc(x)+'</div>'}).join("")+'</div></div>';
+}
+function test1v1(){
+  var a=S.chars.find(function(c){return c.id===S.testSelected.a}),b=S.chars.find(function(c){return c.id===S.testSelected.b});
+  if(!a||!b||a.id===b.id){toast("Select two different Warriors");return}
+  var res=testMatch(a,b);testApplyResult(a,b,res,"Practice");
+  S.battleHistory.unshift({day:S.day,type:"Practice 1v1",a:testSnapshot(a),b:testSnapshot(b),result:res});
+  S.battleHistory=S.battleHistory.slice(0,100);log("Practice 1v1: "+res.winnerName+" defeated "+res.loserName);save();
+  document.getElementById("modalBox").innerHTML=testReport(a.name+" vs "+b.name,res)+'<button class="btn" onclick="closeModal();render()">CLOSE REPORT</button>';showModal();
+}
+function test5v5(){
+  var ids=S.team.slice(0,5);
+  if(ids.length!==5){toast("Select exactly 5 Warriors first");return}
+  var foe=ids.map(function(id){return S.chars.find(function(c){return c.id===id})});
+  var enemy=S.chars.slice().filter(function(c){return !ids.includes(c.id)}).slice(0,5);
+  if(enemy.length<5){toast("Need at least 10 Warriors for a full own 5v5 test");return}
+  var wins=0,losses=0,matches=[];
+  for(var i=0;i<5;i++){var r=testMatch(foe[i],enemy[i]);matches.push({a:foe[i],b:enemy[i],r:r});if(r.winner==="A")wins++;else losses++}
+  matches.forEach(function(m){testApplyResult(m.a,m.b,m.r,"Practice 5v5")});
+  var overall=wins>=3?"YOU WIN THE 5v5":"OPPONENT WINS THE 5v5";
+  S.battleHistory.unshift({day:S.day,type:"Practice 5v5",score:wins+"-"+losses,matches:matches.map(function(m){return {a:m.a.name,b:m.b.name,result:m.r.winnerName}}),overall:overall});
+  S.battleHistory=S.battleHistory.slice(0,100);log("Practice 5v5: "+overall+" ("+wins+"-"+losses+")");save();
+  var html='<div class="test-report"><div class="'+(wins>=3?"test-win":"test-loss")+'">🏆 '+overall+'</div><p><b>Final Score: YOU '+wins+' — '+losses+' OPPONENT</b></p>';
+  matches.forEach(function(m,i){html+='<div class="test-round"><b>MATCH '+(i+1)+': '+esc(m.a.name)+' vs '+esc(m.b.name)+'</b> — '+esc(m.r.winnerName)+' wins<br><span class="tiny">'+esc(m.r.reasons[0])+' · '+esc(m.r.reasons[1]||"Build interaction")+'</span></div>'});
+  html+='<h3>WIN CONDITION</h3><div class="test-reason">First side to reach 3 wins wins the 5v5. The other Warriors are not deleted or permanently lost.</div></div>';
+  document.getElementById("modalBox").innerHTML=html+'<button class="btn" onclick="closeModal();render()">CLOSE REPORT</button>';showModal();
+}
+function friendEncode(obj){
+  var raw=JSON.stringify(obj),bin=unescape(encodeURIComponent(raw)),b64=btoa(bin).replace(/=+$/,"");
+  return "ASC1-"+b64.replace(/(.{4})/g,"$1-").replace(/-$/,"");
+}
+function friendDecode(code){
+  try{var b=code.replace(/^ASC1-/,"").replace(/-/g,"");while(b.length%4)b+="=";var raw=decodeURIComponent(escape(atob(b)));return JSON.parse(raw)}catch(e){return null}
+}
+function exportFriendCode(){
+  var ids=S.team.slice(0,5);
+  if(!ids.length){toast("Select at least one Warrior");return}
+  var team=ids.map(function(id){var c=S.chars.find(function(x){return x.id===id});return c?testSnapshot(c):null}).filter(Boolean);
+  var code=friendEncode({game:"ASCEND",version:1,day:S.day,team:team});
+  document.getElementById("modalBox").innerHTML='<h2>FRIEND BATTLE CODE</h2><p class="muted">Send this code to your friend. It contains only the selected Battle Snapshot.</p><div class="test-code">'+esc(code)+'</div><p class="tiny">It does not contain your Credits, account or full inventory.</p><button class="btn" onclick="closeModal()">CLOSE</button>';showModal();
+}
+function importFriendCode(){
+  document.getElementById("modalBox").innerHTML='<h2>IMPORT FRIEND BATTLE CODE</h2><input id="friendCodeInput" class="input" placeholder="Paste ASC1-..."><button class="btn" onclick="doImportFriend()">IMPORT</button><button class="btn alt" onclick="closeModal()">CANCEL</button>';showModal();
+}
+function doImportFriend(){
+  var data=friendDecode(document.getElementById("friendCodeInput").value.trim());
+  if(!data||data.game!=="ASCEND"||!data.team||!data.team.length){toast("Invalid Battle Code");return}
+  S.friendTeams=data.team;log("Imported Friend Battle Team ("+data.team.length+" Warriors)");save();closeModal();render();toast("Friend team imported");
+}
+function friendBattle1v1(){
+  if(!S.friendTeams.length){toast("Import a Friend Battle Code first");return}
+  if(!S.testSelected.a){toast("Select your Warrior as Player 1");return}
+  var a=S.chars.find(function(c){return c.id===S.testSelected.a}),b=S.friendTeams[0];
+  var r=testMatch(a,b);testApplyResult(a,{battles:b.battles||0,wins:b.wins||0,losses:b.losses||0,xp:b.xp||0,level:b.level||1,value:b.value||100,condition:b.condition||100,energy:b.energy||100,history:b.history||[]},r,"Friend");
+  S.battleHistory.unshift({day:S.day,type:"Friend 1v1",a:a.name,b:b.name,result:r});S.battleHistory=S.battleHistory.slice(0,100);save();
+  document.getElementById("modalBox").innerHTML=testReport(a.name+" vs "+b.name,r)+'<button class="btn" onclick="closeModal();render()">CLOSE REPORT</button>';showModal();
+}
+function friendBattle5v5(){
+  if(!S.friendTeams.length||S.friendTeams.length<5){toast("Friend code must contain 5 Warriors");return}
+  if(S.team.length!==5){toast("Select exactly 5 of your Warriors");return}
+  var matches=[],wins=0,losses=0;
+  for(var i=0;i<5;i++){if(wins>=3||losses>=3)break;var a=S.chars.find(function(c){return c.id===S.team[i]}),b=S.friendTeams[i],r=testMatch(a,b);matches.push({a:a,b:b,r:r});if(r.winner==="A")wins++;else losses++;a.battles++;if(r.winner==="A")a.wins++;else a.losses++;a.xp+=r.winner==="A"?30:10;a.condition=Math.max(0,a.condition-5);a.energy=Math.max(0,a.energy-5)}
+  var overall=wins>=3?"YOU WIN THE 5v5":"FRIEND WINS THE 5v5";
+  S.battleHistory.unshift({day:S.day,type:"Friend 5v5",score:wins+"-"+losses,overall:overall});S.battleHistory=S.battleHistory.slice(0,100);log("Friend 5v5: "+overall+" ("+wins+"-"+losses+")");save();
+  var html='<div class="test-report"><div class="'+(wins>=3?"test-win":"test-loss")+'">🏆 '+overall+'</div><p><b>Final Score: YOU '+wins+' — '+losses+' FRIEND</b></p>';
+  matches.forEach(function(m,i){html+='<div class="test-round"><b>MATCH '+(i+1)+'</b> '+esc(m.a.name)+' vs '+esc(m.b.name)+' — <b>'+esc(m.r.winnerName)+' wins</b><br>'+esc(m.r.reasons[0])+'</div>'});
+  html+='<div class="test-reason">3 of 5 wins is the victory condition.</div></div>';
+  document.getElementById("modalBox").innerHTML=html+'<button class="btn" onclick="closeModal();render()">CLOSE REPORT</button>';showModal();
+}
+function testCenter(){
+  if(!S.chars.length)return '<div class="card empty"><h2>TEST CENTER</h2><p>Create Warriors first.</p><button class="btn" onclick="go("home")">HOME</button></div>';
+  var selectedA=S.testSelected.a?S.chars.find(function(c){return c.id===S.testSelected.a}):null;
+  var selectedB=S.testSelected.b?S.chars.find(function(c){return c.id===S.testSelected.b}):null;
+  return '<div class="test-card"><div class="test-title">⚔️ BATTLE TEST CENTER</div><div class="test-muted">Automatic combat. Stats, equipment, abilities, condition, energy, matchup and controlled variance determine the result.</div><div class="test-grid3"><div class="test-stat"><span>OWN</span><b>1v1</b></div><div class="test-stat"><span>OWN</span><b>5v5</b></div><div class="test-stat"><span>FRIEND</span><b>1v1 / 5v5</b></div></div>'+
+    '<h3>1v1 PRACTICE</h3><p class="tiny">Select two of your Warriors. The system simulates the entire fight and produces a legitimate Battle Report.</p>'+
+    testOwnWarriors()+
+    '<button class="btn" onclick="test1v1()" '+(!selectedA||!selectedB||selectedA.id===selectedB.id?"disabled":"")+'>AUTO SIMULATE 1v1</button>'+
+    '<h3>5v5 PRACTICE</h3><p class="tiny">Use the existing team of exactly 5. For offline testing, an opponent team is created from other Warriors.</p>'+
+    '<button class="btn alt" onclick="test5v5()" '+(S.team.length!==5?"disabled":"")+'>AUTO SIMULATE 5v5 · '+S.team.length+'/5</button></div>'+
+    '<div class="test-card"><div class="test-title">🤝 FRIEND BATTLE</div><p class="test-muted">Offline multiplayer test. Export your selected team, send the code, then import your friend’s snapshot.</p>'+
+    '<button class="btn alt" onclick="exportFriendCode()">EXPORT MY BATTLE CODE</button><button class="btn alt" onclick="importFriendCode()">IMPORT FRIEND CODE</button>'+
+    '<button class="btn" onclick="friendBattle1v1()" '+(!S.friendTeams.length||!selectedA?"disabled":"")+'>FRIEND 1v1</button>'+
+    '<button class="btn" onclick="friendBattle5v5()" '+(!S.friendTeams.length||S.team.length!==5?"disabled":"")+'>FRIEND 5v5 · FIRST TO 3</button>'+
+    (S.friendTeams.length?'<p class="tiny">Friend team loaded: '+S.friendTeams.length+' Warriors.</p>':'<p class="tiny">No Friend Battle Snapshot loaded.</p>')+
+    '</div>'+
+    '<div class="test-card"><div class="test-title">⏭️ DAY SIMULATION</div><p class="test-muted">No need to wait 24 hours during testing.</p><button class="btn" onclick="nextDay()">SIMULATE NEXT DAY → DAY '+(S.day+1)+'</button><div class="tiny">Daily drops, training, scavenge, practice and missions refresh. Warriors keep their progress.</div></div>'+
+    (S.battleHistory.length?'<div class="test-card"><div class="test-title">BATTLE HISTORY</div>'+S.battleHistory.slice(0,10).map(function(x){return '<div class="test-round">Day '+x.day+' · '+esc(x.type)+' · '+esc(x.overall||((x.result&&x.result.winnerName)||"Recorded"))+'</div>'}).join("")+'</div>':'');
+}
+function detailedWarriors(){
+  if(!S.chars.length)return warriors();
+  return '<div class="card"><div class="row"><div><h2>YOUR WARRIORS</h2><div class="tiny">Tap any Warrior to open the full record.</div></div><span class="badge">'+S.chars.length+' WARRIORS</span></div></div>'+
+    S.chars.map(function(c){
+      var stage=c.level>=50?"ASCENDED":c.level>=25?"CORE EVOLVED":c.level>=10?"DEVELOPED":c.level>=5?"AWAKENED":"ORIGIN";
+      var recent=c.history.length?c.history[c.history.length-1]:"No history yet";
+      return '<div class="compact-warrior" onclick="openWarriorDetails(\''+c.id+'\')">'+
+        '<div class="compact-head">'+
+          '<div class="compact-avatar">'+testVisual(c)+'</div>'+ 
+          '<div class="compact-main"><div class="compact-name">'+esc(c.origin)+' '+esc(c.name)+'</div><div class="compact-meta">'+esc(c.id)+' · '+stage+' · LV '+c.level+'</div></div>'+ 
+          '<div><div class="compact-power">POWER '+testPower(c)+'</div><div class="compact-arrow">›</div></div>'+ 
+        '</div>'+ 
+        '<div class="compact-stats">'+c.stats.map(function(v,i){return '<div class="compact-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join('')+'</div>'+
+        '<div class="compact-footer"><span class="compact-chip">⚡ '+c.energy+'% energy</span><span class="compact-chip">◉ '+c.condition+'% condition</span><span class="compact-chip">🏆 '+c.wins+'W / '+c.losses+'L</span><span class="compact-chip">'+esc(c.abilities[0]||'No ability')+'</span></div>'+
+        '<div class="tiny" style="margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Latest: '+esc(recent)+'</div>'+ 
+      '</div>'+
+      '<div class="compact-actions" style="margin-bottom:8px">'+
+        '<button class="btn alt" onclick="event.stopPropagation();selectTeam(\''+c.id+'\')">'+(S.team.includes(c.id)?'REMOVE FROM 5v5 TEAM':'ADD TO 5v5 TEAM')+'</button>'+ 
+        '<button class="btn" onclick="event.stopPropagation();openTraining(\''+c.id+'\')" '+(S.training<1?'disabled':'')+'>TRAIN · '+S.training+'/6</button>'+ 
+      '</div>';
+    }).join('');
+}
+function openWarriorDetails(id){
+  var c=S.chars.find(function(x){return x.id===id});
+  if(!c)return;
+  S.selected=id;
+  var stage=c.level>=50?"ASCENDED":c.level>=25?"CORE EVOLVED":c.level>=10?"DEVELOPED":c.level>=5?"AWAKENED":"ORIGIN";
+  var stats=c.stats.map(function(v,i){return '<div class="warrior-modal-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join('');
+  var hist=c.history.slice().reverse().map(function(h){return '<div class="history-row">• '+esc(h)+'</div>'}).join('');
+  document.getElementById('modalBox').innerHTML=
+    '<div class="hero">'+testVisual(c)+'<div class="muted">'+esc(c.origin)+' · '+stage+'</div><h1>'+esc(c.name)+'</h1><span class="badge">'+esc(c.id)+'</span><span class="badge">LEVEL '+c.level+'</span><span class="badge">POWER '+testPower(c)+'</span></div>'+ 
+    '<div class="card"><h3>ALL STATS</h3><div class="warrior-modal-stats">'+stats+'</div></div>'+ 
+    '<div class="card"><h3>PROGRESSION & CONDITION</h3><div class="stat"><span>XP</span><b>'+c.xp+'/100</b></div><div class="stat"><span>Condition</span><b>'+c.condition+'%</b></div><div class="stat"><span>Core Energy</span><b>'+c.energy+'%</b></div><div class="stat"><span>Wins / Losses</span><b>'+c.wins+' / '+c.losses+'</b></div><div class="stat"><span>Estimated Value</span><b>◈ '+c.value+'</b></div></div>'+ 
+    '<div class="card"><h3>ABILITIES</h3><p class="tiny">'+(c.abilities.length?c.abilities.map(esc).join(' · '):'None')+'</p><h3>EQUIPMENT</h3><p class="tiny">'+(c.gear.length?c.gear.map(esc).join(' · '):'None')+'</p></div>'+ 
+    '<div class="card"><h3>COMPLETE WARRIOR HISTORY</h3><div class="history-scroll">'+(hist||'<div class="history-row">No history yet.</div>')+'</div></div>'+ 
+    '<button class="btn" onclick="closeModal();render()">CLOSE</button>';
+  showModal();
+}
+function continuousScreen(){
+  switch(S.screen){
+    case "warriors": return detailedWarriors();
+    case "battle": return testCenter();
+    default: return null;
+  }
+}
+function originalScreenOverride(){
+  switch(S.screen){case"warriors":return detailedWarriors();case"battle":return testCenter();case"cards":return testCenter();case"actions":return actions();case"inventory":return inventory();case"market":return market();case"history":return history();default:return home();}
+}
+function renderContinuous(){
+  ensureTestState();
+  document.getElementById("resources").innerHTML=[["◈",S.credits],["◇",S.fragments],["⚙",S.parts],["✦",S.shards],["◆",S.prime],["⬢",S.overcore],["DAY",S.day]].map(function(x){return '<span class="res">'+x[0]+' '+x[1]+'</span>'}).join("");
+  var tabs=[["home","HOME"],["warriors","WARRIORS"],["battle","BATTLE"],["actions","ACTIONS"],["inventory","INVENTORY"],["market","MARKET"],["history","CHRONICLE"]];
+  document.getElementById("nav").innerHTML=tabs.map(function(t){return '<button class="'+(S.screen===t[0]?"active":"")+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>'}).join("");
+  document.getElementById("main").innerHTML=originalScreenOverride();
+}
+function render(){renderContinuous();}
+
+
+
+/* ================= FULL GAMEPLAY V7 PATCH ================= */
+function ensureFullGame(){
+  ensureTestState();
+  if(!S.tasks)S.tasks=[null,null,null];
+  if(!S.taskHistory)S.taskHistory=[];
+  if(!S.evolutionHistory)S.evolutionHistory=[];
+  if(!S.craftHistory)S.craftHistory=[];
+  if(!S.abilityHistory)S.abilityHistory=[];
+  S.chars.forEach(function(c){
+    if(!c.equipment)c.equipment={weapon:null,armour:null,augment1:null,augment2:null,core:null};
+    if(c.evolutionStage===undefined)c.evolutionStage=1;
+    if(c.mastery===undefined)c.mastery=0;
+    if(c.potential===undefined)c.potential=100;
+    if(c.gear&&c.gear.length){
+      c.gear.forEach(function(name){
+        var g=S.inventory.find(function(x){return x.name===name});
+        if(g && !Object.values(c.equipment).includes(g.id)){
+          var slot=slotFor(g);
+          if(slot&&!c.equipment[slot])c.equipment[slot]=g.id;
+        }
+      });
+    }
+  });
+}
+function slotFor(g){
+  if(!g)return null;
+  if(g.type==='Weapon')return 'weapon';
+  if(g.type==='Armour')return 'armour';
+  if(g.type==='Augment'){
+    return 'augment1';
+  }
+  if(g.type==='Core Module')return 'core';
+  return null;
+}
+function rarityMult(r){return [1,1.25,1.6,2.1,2.8,3.7,5][RARITIES.indexOf(r)]||1}
+function makeEquipment(){
+  var base=GEAR[rnd(0,GEAR.length-1)],r=rarity(),m=rarityMult(r),type=base[1], stats={};
+  if(type==='Weapon'){
+    var choices=[['Force',12],['Precision',8],['Velocity',5]]; var q=choices[rnd(0,choices.length-1)];stats[q[0]]=Math.round(q[1]*m);if(Math.random()<.35)stats['Core Energy']=Math.round(4*m);
+  }else if(type==='Armour'){
+    var choices2=[['Guard',14],['Vitality',12],['Recovery',5]];var q2=choices2[rnd(0,choices2.length-1)];stats[q2[0]]=Math.round(q2[1]*m);if(Math.random()<.35)stats['Adaptation']=Math.round(4*m);
+  }else{
+    var choices3=[['Core Energy',10],['Adaptation',9],['Recovery',8],['Precision',6]];var q3=choices3[rnd(0,choices3.length-1)];stats[q3[0]]=Math.round(q3[1]*m);
+  }
+  var g={id:'ITM-'+Date.now().toString(36).toUpperCase()+'-'+rnd(100,999),name:base[0],type:type,rarity:r,condition:100,stats:stats,sell:Math.max(4,Math.round(8*m)),source:'Drop'};
+  S.inventory.push(g);return g;
+}
+function effectiveStats(c){
+  var st=(c.stats||[]).slice();
+  var map={Vitality:0,Force:1,Guard:2,Velocity:3,Precision:4,'Core Energy':5,Recovery:6,Adaptation:7};
+  var ids=c.equipment?Object.values(c.equipment):[];
+  ids.forEach(function(id){var g=S.inventory.find(function(x){return x.id===id});if(g&&g.stats){Object.keys(g.stats).forEach(function(k){if(map[k]!==undefined)st[map[k]]+=Math.round(g.stats[k]*Math.max(.2,(g.condition||100)/100));});}});
+  return st;
+}
+function testPower(c){
+  var st=effectiveStats(c),eq=0;(c.equipment?Object.values(c.equipment):[]).forEach(function(id){var g=S.inventory.find(function(x){return x.id===id});if(g)eq+=Math.round(Object.values(g.stats||{}).reduce(function(a,b){return a+b},0)*Math.max(.2,(g.condition||100)/100));});
+  return Math.max(1,Math.round(st.reduce(function(a,b){return a+b},0)/8+(c.level||1)*7+eq*.35+(c.condition||100)/10+(c.energy||100)/12));
+}
+function xpGain(c,n){
+  c.xp=(c.xp||0)+n;
+  while(c.xp>=100){c.xp-=100;c.level++;c.history.push('Day '+S.day+': Reached Level '+c.level);log(c.name+' reached Level '+c.level);if([5,10,25,50].includes(c.level)){c.evolutionStage=Math.max(c.evolutionStage,stageForLevel(c.level));}}
+}
+function stageForLevel(l){return l>=50?5:l>=25?4:l>=10?3:l>=5?2:1}
+function train(id,idx){
+ if(S.training<=0)return toast('No training sessions left today');var c=S.chars.find(function(x){return x.id===id});if(!c)return;
+ c.stats[idx]+=3;c.mastery=(c.mastery||0)+1;xpGain(c,20);S.training--;c.value+=5;c.history.push('Day '+S.day+': '+STATN[idx]+' Trial +3');log(c.name+' completed '+STATN[idx]+' training');save();render();toast('Training complete');
+}
+function equipmentForWarrior(c){
+ var slots=[['weapon','WEAPON'],['armour','ARMOUR'],['augment1','AUGMENT 1'],['augment2','AUGMENT 2'],['core','CORE MODULE']];
+ return '<div class="slot-grid">'+slots.map(function(x){var id=c.equipment&&c.equipment[x[0]],g=S.inventory.find(function(i){return i.id===id});return '<div class="slot"><span>'+x[1]+'</span><b>'+esc(g?g.name:'EMPTY')+'</b>'+(g?'<small class="tiny">'+g.rarity+' · '+Object.entries(g.stats||{}).map(function(z){return z[0]+' +'+z[1]}).join(', ')+' · '+g.condition+'%</small>':'')+'<button class="btn alt" onclick="openEquip(\''+c.id+'\',\''+x[0]+'\')">'+(g?'CHANGE':'EQUIP')+'</button></div>';}).join('')+'</div>';
+}
+function openEquip(id,slot){
+ var c=S.chars.find(function(x){return x.id===id});if(!c)return;S.selected=id;
+ var allowed=slot==='weapon'?'Weapon':slot==='armour'?'Armour':slot==='core'?'Core Module':'Augment';
+ var items=S.inventory.filter(function(g){return g.type===allowed});
+ var body='<h2>EQUIP '+slot.toUpperCase()+'</h2><p class="muted">Choose an item. Equipment changes the Warrior build and battle calculations.</p>';
+ if(slot==='augment1'||slot==='augment2')items=items.filter(function(g){return !Object.values(c.equipment||{}).includes(g.id)||c.equipment[slot]===g.id});
+ body+=items.length?items.map(function(g){return '<div class="item-mini"><div class="row"><b>'+esc(g.name)+'</b><span class="stage-pill">'+g.rarity+'</span></div><div class="tiny">'+Object.entries(g.stats||{}).map(function(z){return z[0]+' +'+z[1]}).join(' · ')+' · Condition '+g.condition+'%</div><button class="btn alt" onclick="equipItemById(\''+esc(g.id)+'\',\''+esc(id)+'\',\''+slot+'\')">EQUIP</button></div>';}).join(''):'<div class="empty">No compatible items. Craft or obtain one first.</div>';
+ if(c.equipment&&c.equipment[slot])body+='<button class="btn warn" onclick="unequipSlot(\''+id+'\',\''+slot+'\')">UNEQUIP CURRENT</button>';
+ body+='<button class="btn" onclick="closeModal();render()">CLOSE</button>';document.getElementById('modalBox').innerHTML=body;showModal();
+}
+function equipItemById(itemId,charId,slot){var c=S.chars.find(function(x){return x.id===charId}),g=S.inventory.find(function(x){return x.id===itemId});if(!c||!g)return;if(!c.equipment)c.equipment={weapon:null,armour:null,augment1:null,augment2:null,core:null};if(slot==='augment1'||slot==='augment2'){ } else if(c.equipment[slot]){var old=S.inventory.find(function(x){return x.id===c.equipment[slot]});if(old)c.history.push('Unequipped '+old.name);} c.equipment[slot]=g.id;if(!c.gear.includes(g.name))c.gear.push(g.name);c.history.push('Equipped '+g.name+' in '+slot);log(c.name+' equipped '+g.name);save();openWarriorDetails(c.id);}
+function unequipSlot(id,slot){var c=S.chars.find(function(x){return x.id===id});if(!c)return;var g=S.inventory.find(function(x){return x.id===c.equipment[slot]});if(g)c.history.push('Unequipped '+g.name);c.equipment[slot]=null;save();openWarriorDetails(id);}
+function craftEquipment(name){
+ var recipe={
+  'VOIDBLADE':{type:'Weapon',cost:{parts:6,fragments:2},stats:{Force:12,Precision:8}},
+  'TITAN HAMMER':{type:'Weapon',cost:{parts:9,fragments:3},stats:{Force:25,Guard:5}},
+  'AETHER SPEAR':{type:'Weapon',cost:{parts:7,fragments:3},stats:{Force:10,Precision:18,Velocity:12}},
+  'TITANFRAME':{type:'Armour',cost:{parts:8,fragments:3},stats:{Guard:25,Vitality:15,Velocity:-8}},
+  'AEROSHELL':{type:'Armour',cost:{parts:7,fragments:3},stats:{Guard:5,Velocity:20,Precision:12}},
+  'VOIDWEAVE':{type:'Armour',cost:{parts:6,fragments:4},stats:{Guard:10,Adaptation:15}},
+  'NEURAL LINK':{type:'Augment',cost:{parts:5,fragments:3},stats:{Precision:10,Adaptation:6}},
+  'REGEN MATRIX':{type:'Augment',cost:{parts:5,fragments:3},stats:{Recovery:12,Vitality:5}},
+  'CORE AMPLIFIER':{type:'Augment',cost:{parts:6,fragments:3},stats:{'Core Energy':14,Force:5}}
+ }[name];if(!recipe)return;
+ if(S.parts<(recipe.cost.parts||0)||S.fragments<(recipe.cost.fragments||0)||S.shards<(recipe.cost.shards||0)){toast('Not enough materials');return}
+ S.parts-=recipe.cost.parts||0;S.fragments-=recipe.cost.fragments||0;S.shards-=recipe.cost.shards||0;
+ var r='Rare',g={id:'CRAFT-'+Date.now().toString(36).toUpperCase()+'-'+rnd(100,999),name:name,type:recipe.type,rarity:r,condition:100,stats:Object.assign({},recipe.stats),sell:15,source:'Forge'};S.inventory.push(g);S.craftHistory.unshift({day:S.day,name:name});log('Forged '+name);save();render();toast(name+' forged');
+}
+function forge(){
+ var recipes=[['VOIDBLADE','Weapon','6 Parts · 2 Fragments'],['TITAN HAMMER','Weapon','9 Parts · 3 Fragments'],['AETHER SPEAR','Weapon','7 Parts · 3 Fragments'],['TITANFRAME','Armour','8 Parts · 3 Fragments'],['AEROSHELL','Armour','7 Parts · 3 Fragments'],['VOIDWEAVE','Armour','6 Parts · 4 Fragments'],['NEURAL LINK','Augment','5 Parts · 3 Fragments'],['REGEN MATRIX','Augment','5 Parts · 3 Fragments'],['CORE AMPLIFIER','Augment','6 Parts · 3 Fragments']];
+ return '<div class="card"><h2>⚒ FORGE</h2><p class="muted">Build real equipment from collected materials. Equipment has stats, rarity, condition and battle impact.</p>'+recipes.map(function(r){return '<div class="recipe"><div class="row"><b>'+r[0]+'</b><span class="stage-pill">'+r[1]+'</span></div><div class="cost">'+r[2]+'</div><button class="btn alt" onclick="craftEquipment(\''+r[0]+'\')">FORGE</button></div>';}).join('')+'</div><div class="card"><h3>FORGE HISTORY</h3>'+((S.craftHistory||[]).slice(0,15).map(function(x){return '<div class="tiny">Day '+x.day+' · '+esc(x.name)+'</div>'}).join('')||'<div class="tiny">No crafted items yet.</div>')+'</div>';
+}
+function evolveScreen(){
+ var c=S.chars.find(function(x){return x.id===S.selected})||S.chars[0];if(!c)return '<div class="card empty">Create a Warrior first.</div>';var next=c.level>=50?null:c.level>=25?5:c.level>=10?4:c.level>=5?3:2;var req={2:{level:5,parts:5,fragments:5,shards:1},3:{level:10,parts:10,fragments:8,shards:2},4:{level:25,parts:18,fragments:12,shards:4,prime:2},5:{level:50,parts:30,fragments:20,shards:8,prime:5,overcore:1}}[next];
+ var stage=['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][c.evolutionStage||1];return '<div class="card"><h2>🧬 CORE EVOLUTION</h2><p class="muted">Select a Warrior, then evolve the Core when the level and material requirements are met.</p>'+S.chars.map(function(w){return '<button class="btn '+(w.id===c.id?'':'alt')+'" onclick="selectDevelopWarrior(\''+w.id+'\')">'+esc(w.origin+' '+w.name)+' · LV '+w.level+' · '+stageForLevel(w.level)+'</button>';}).join('')+'</div><div class="card">'+testVisual(c)+'<div class="row"><h2>'+esc(c.origin+' '+c.name)+'</h2><span class="stage-pill">'+stage+'</span></div><div class="grid3"><div class="test-stat"><span>LEVEL</span><b>'+c.level+'</b></div><div class="test-stat"><span>XP</span><b>'+c.xp+'/100</b></div><div class="test-stat"><span>POWER</span><b>'+testPower(c)+'</b></div></div>'+ (req?'<h3>NEXT EVOLUTION</h3><div class="stat"><span>Required Level</span><b>'+req.level+'</b></div><div class="stat"><span>Tech Parts</span><b>'+S.parts+' / '+req.parts+'</b></div><div class="stat"><span>Fragments</span><b>'+S.fragments+' / '+req.fragments+'</b></div><div class="stat"><span>Aether Shards</span><b>'+S.shards+' / '+req.shards+'</b></div><div class="stat"><span>Prime Matter</span><b>'+S.prime+' / '+(req.prime||0)+'</b></div><div class="stat"><span>Overcore</span><b>'+S.overcore+' / '+(req.overcore||0)+'</b></div><button class="btn" onclick="evolveWarrior(\''+c.id+'\')">EVOLVE CORE</button>':'<div class="test-reason">Maximum current evolution stage reached. Further prestige development can continue through Mastery and future Ascension systems.</div>')+'</div>';
+}
+function selectDevelopWarrior(id){S.selected=id;save();render()}
+function evolveWarrior(id){
+ var c=S.chars.find(function(x){return x.id===id});if(!c)return;var n=stageForLevel(c.level)+1;if(n>5){toast('Already fully Ascended');return}var req={2:{level:5,parts:5,fragments:5,shards:1},3:{level:10,parts:10,fragments:8,shards:2},4:{level:25,parts:18,fragments:12,shards:4,prime:2},5:{level:50,parts:30,fragments:20,shards:8,prime:5,overcore:1}}[n];if(c.level<req.level||S.parts<req.parts||S.fragments<req.fragments||S.shards<req.shards||(req.prime||0)>S.prime||(req.overcore||0)>S.overcore){toast('Evolution requirements not met');return}S.parts-=req.parts;S.fragments-=req.fragments;S.shards-=req.shards;S.prime-=req.prime||0;S.overcore-=req.overcore||0;c.evolutionStage=n;c.value+=50;c.history.push('Day '+S.day+': Core evolved to '+['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][n]);S.evolutionHistory.unshift({day:S.day,id:c.id,stage:n});log(c.name+' evolved to '+['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][n]);save();render();toast('CORE EVOLUTION COMPLETE');}
+function abilityLab(){
+ var c=S.chars.find(function(x){return x.id===S.selected})||S.chars[0];if(!c)return '<div class="card empty">Create a Warrior first.</div>';
+ var cores=S.inventory.filter(function(g){return g.type==='Ability Core'});var known=c.abilities||[];
+ return '<div class="card"><h2>✦ ABILITY LAB</h2><p class="muted">Research, store and install abilities. Abilities combine with stats and equipment during battle.</p>'+S.chars.map(function(w){return '<button class="btn '+(w.id===c.id?'':'alt')+'" onclick="selectDevelopWarrior(\''+w.id+'\')">'+esc(w.origin+' '+w.name)+' · '+w.abilities.length+' abilities</button>';}).join('')+'</div><div class="card"><h3>STORED ABILITY CORES</h3>'+(cores.length?cores.map(function(g){return '<div class="item-mini"><b>'+esc(g.name)+'</b><div class="tiny">'+esc(g.description||'Ability Core')+'</div><button class="btn alt" onclick="installAbility(\''+g.id+'\',\''+c.id+'\')">INSTALL ON '+esc(c.name)+'</button></div>';}).join(''):'<div class="empty">No Ability Cores. Earn them from drops or research.</div>')+'</div><div class="card"><h3>KNOWN ABILITIES</h3>'+known.map(function(a){return '<div class="stat"><span>'+esc(a)+'</span><b>MASTERED</b></div>';}).join('')+'</div>';
+}
+function installAbility(itemId,charId){var g=S.inventory.find(function(x){return x.id===itemId}),c=S.chars.find(function(x){return x.id===charId});if(!g||!c)return;if(c.abilities.includes(g.name)){toast('Ability already known');return}c.abilities.push(g.name);c.mastery=(c.mastery||0)+2;c.value+=15;c.history.push('Day '+S.day+': Installed ability '+g.name);S.inventory=S.inventory.filter(function(x){return x.id!==itemId});S.abilityHistory.unshift({day:S.day,name:g.name,warrior:c.id});log(c.name+' learned '+g.name);save();render();toast(g.name+' installed');}
+function startTask(type){ensureFullGame();var slot=S.tasks.findIndex(function(x){return !x});if(slot<0){toast('All 3 task slots are occupied');return}var defs={Training:{days:1,reward:'stats'},Scavenge:{days:1,reward:'materials'},Maintenance:{days:1,reward:'condition'},Ability:{days:2,reward:'ability'},Exploration:{days:2,reward:'rare'},Collection:{days:2,reward:'equipment'},Challenge:{days:3,reward:'xp'},Prestige:{days:5,reward:'prestige'}};var d=defs[type];S.tasks[slot]={type:type,remaining:d.days,reward:d.reward,started:S.day};log('Started '+type+' Task in slot '+(slot+1));save();render();toast(type+' task started');}
+function resolveTasks(){ensureFullGame();S.tasks.forEach(function(t,i){if(!t)return;t.remaining--;if(t.remaining>0)return;var c=S.chars[0];if(t.reward==='stats'&&c){c.stats[rnd(0,7)]+=4;xpGain(c,30);c.history.push('Day '+S.day+': Training Task completed +4 stat')}else if(t.reward==='materials'){S.parts+=rnd(3,6);S.fragments+=rnd(1,3)}else if(t.reward==='condition'){S.chars.forEach(function(w){w.condition=Math.min(100,w.condition+20)})}else if(t.reward==='rare'){S.shards+=rnd(1,2);S.prime+=Math.random()<.4?1:0}else if(t.reward==='equipment'){makeEquipment()}else if(t.reward==='ability'){var a=ABILITIES[rnd(0,ABILITIES.length-1)],g={id:'ABL-'+Date.now().toString(36).toUpperCase()+'-'+rnd(100,999),name:a[0],type:'Ability Core',rarity:'Rare',condition:100,description:a[1],affinity:a[2],sell:12};S.inventory.push(g)}else if(t.reward==='xp'&&c)xpGain(c,60);else if(t.reward==='prestige'){S.rating+=10;S.prime+=2}S.taskHistory.unshift({day:S.day,type:t.type});log(t.type+' Task completed');S.tasks[i]=null;});S.taskHistory=S.taskHistory.slice(0,100);}
+function tasksScreen(){ensureFullGame();var types=['Training','Scavenge','Maintenance','Ability','Exploration','Collection','Challenge','Prestige'];return '<div class="card"><h2>◈ LONG-TERM TASKS · '+S.tasks.filter(Boolean).length+'/3</h2><p class="muted">Run up to three persistent tasks. They resolve automatically when you simulate future days.</p>'+S.tasks.map(function(t,i){return '<div class="task '+(!t?'done':'')+'"><b>SLOT '+(i+1)+'</b> · '+(t?esc(t.type)+' · '+t.remaining+' day(s) remaining':'EMPTY')+'</div>';}).join('')+'</div><div class="card"><h3>START TASK</h3>'+types.map(function(t){return '<button class="btn alt" onclick="startTask(\''+t+'\')">START '+t.toUpperCase()+'</button>';}).join('')+'</div><div class="card"><h3>TASK HISTORY</h3>'+((S.taskHistory||[]).slice(0,20).map(function(x){return '<div class="tiny">Day '+x.day+' · '+esc(x.type)+' completed</div>'}).join('')||'<div class="tiny">No completed tasks.</div>')+'</div>';}
+function develop(){return '<div class="dev-tabs"><button onclick="setDevelop(\'evolve\')" class="'+(S.devTab==='evolve'?'active':'')+'">EVOLVE</button><button onclick="setDevelop(\'abilities\')" class="'+(S.devTab==='abilities'?'active':'')+'">ABILITIES</button><button onclick="setDevelop(\'tasks\')" class="'+(S.devTab==='tasks'?'active':'')+'">TASKS</button></div>'+(S.devTab==='abilities'?abilityLab():S.devTab==='tasks'?tasksScreen():evolveScreen());}
+function setDevelop(x){S.devTab=x;save();render();}
+function inventory(){ensureFullGame();if(!S.inventory.length)return '<div class="card empty"><h2>Inventory Empty</h2><p>Open drops, forge equipment and complete tasks to build your collection.</p><button class="btn" onclick="go(\'home\')">OPEN DROPS</button></div>';return '<div class="card"><h2>INVENTORY · '+S.inventory.length+' ITEMS</h2>'+S.inventory.map(function(g){return '<div class="item-mini"><div class="row"><b>'+esc(g.name)+'</b><span class="stage-pill">'+esc(g.rarity||'Common')+'</span></div><div class="tiny">'+esc(g.type||'Item')+(g.stats?' · '+Object.entries(g.stats).map(function(z){return z[0]+' +'+z[1]}).join(' · '):'')+(g.condition!==undefined?' · Condition '+g.condition+'%':'')+'</div><button class="btn alt" onclick="go(\'warriors\')">SELECT WARRIOR TO EQUIP</button></div>';}).join('')+'</div><button class="btn" onclick="go(\'forge\')">OPEN FORGE</button>'}
+function openWarriorDetails(id){
+  var c=S.chars.find(function(x){return x.id===id});if(!c)return;S.selected=id;ensureFullGame();
+  var stage=['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][c.evolutionStage||stageForLevel(c.level)];var stats=effectiveStats(c).map(function(v,i){return '<div class="warrior-modal-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join('');var hist=(c.history||[]).slice().reverse().map(function(h){return '<div class="history-row">• '+esc(h)+'</div>'}).join('');
+  document.getElementById('modalBox').innerHTML='<div class="hero">'+testVisual(c)+'<div class="muted">'+esc(c.origin)+' · '+stage+'</div><h1>'+esc(c.name)+'</h1><span class="badge">'+esc(c.id)+'</span><span class="badge">LEVEL '+c.level+'</span><span class="badge">POWER '+testPower(c)+'</span></div><div class="card"><h3>ALL EFFECTIVE STATS</h3><div class="warrior-modal-stats">'+stats+'</div></div><div class="card"><h3>PROGRESSION</h3><div class="stat"><span>XP</span><b>'+c.xp+'/100</b></div><div class="stat"><span>Mastery</span><b>'+c.mastery+'</b></div><div class="stat"><span>Condition</span><b>'+c.condition+'%</b></div><div class="stat"><span>Energy</span><b>'+c.energy+'%</b></div><div class="stat"><span>Wins / Losses</span><b>'+c.wins+' / '+c.losses+'</b></div></div><div class="card"><h3>EQUIPMENT</h3>'+equipmentForWarrior(c)+'</div><div class="card"><h3>ABILITIES</h3><p class="tiny">'+(c.abilities||[]).map(esc).join(' · ')+'</p><button class="btn alt" onclick="closeModal();S.devTab=\'abilities\';go(\'develop\')">OPEN ABILITY LAB</button></div><div class="card"><h3>COMPLETE WARRIOR HISTORY</h3><div class="history-scroll">'+(hist||'<div class="history-row">No history yet.</div>')+'</div></div><button class="btn" onclick="closeModal();render()">CLOSE</button>';
+  showModal();
+}
+function detailedWarriors(){
+ ensureFullGame();if(!S.chars.length)return warriors();return S.chars.map(function(c){var stage=['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][c.evolutionStage||stageForLevel(c.level)];return '<div class="compact-warrior" onclick="openWarriorDetails(\''+c.id+'\')"><div class="compact-head"><div class="compact-avatar">'+c.icon+'</div><div class="compact-main"><div class="compact-name">'+esc(c.origin+' '+c.name)+'</div><div class="compact-meta">'+esc(c.id)+' · '+stage+' · LV '+c.level+'</div></div><div class="compact-power">POWER<br>'+testPower(c)+'<div class="compact-arrow">›</div></div></div><div class="compact-stats">'+effectiveStats(c).slice(0,4).map(function(v,i){return '<div class="compact-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join('')+'</div><div class="compact-footer"><span class="compact-chip">'+c.wins+'W / '+c.losses+'L</span><span class="compact-chip">⚙ '+c.condition+'%</span><span class="compact-chip">✦ '+c.abilities.length+' Abilities</span><span class="compact-chip">'+(Object.values(c.equipment||{}).filter(Boolean).length)+' Gear</span><span class="compact-chip">Tap for full details ›</span></div></div>';}).join('');}
+function forgeScreen(){return forge()}
+function originalScreenOverride(){switch(S.screen){case'warriors':return detailedWarriors();case'battle':return testCenter();case'actions':return actions();case'inventory':return inventory();case'market':return market();case'history':return history();case'forge':return forgeScreen();case'develop':return develop();default:return home();}}
+function nextDay(){ensureFullGame();resolveTasks();S.day++;S.drops=3;S.timed=3;S.training=6;S.scavenge=5;S.practice=5;S.ranked=3;S.missions={done:false};S.chars.forEach(function(c){c.energy=Math.min(100,c.energy+25);c.condition=Math.min(100,c.condition+10);c.history.push('Day '+S.day+': Daily reset / recovery');});log('Advanced to Day '+S.day+' — daily systems refreshed');save();render();toast('DAY '+S.day+' ONLINE');}
+function renderContinuous(){ensureFullGame();document.getElementById('resources').innerHTML=[['◈',S.credits],['◇',S.fragments],['⚙',S.parts],['✦',S.shards],['◆',S.prime],['⬢',S.overcore],['DAY',S.day]].map(function(x){return '<span class="res">'+x[0]+' '+x[1]+'</span>'}).join('');var tabs=[['home','HOME'],['warriors','WARRIORS'],['develop','DEVELOP'],['forge','FORGE'],['battle','BATTLE'],['actions','ACTIONS'],['inventory','INVENTORY'],['market','MARKET'],['history','CHRONICLE']];document.getElementById('nav').innerHTML=tabs.map(function(t){return '<button class="'+(S.screen===t[0]?'active':'')+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');document.getElementById('main').innerHTML=originalScreenOverride();}
+function render(){renderContinuous();}
+
+ensureFullGame();
+render();
+restorePersistentSave();
+window.addEventListener("pagehide",function(){save()});
+window.addEventListener("beforeunload",function(){save()});
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden")save()});
+</script>
+
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('./sw.js').catch(function(){}); });
+}
+</script>
+</body>
+</html>
