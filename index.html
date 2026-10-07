@@ -21,7 +21,7 @@ h1,h2,h3{margin:5px 0 10px}h1{font-size:28px}h2{font-size:19px}h3{font-size:14px
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#eef2f5;color:#080a0d;padding:10px 14px;border-radius:10px;font-weight:800;font-size:12px;z-index:20;display:none;max-width:90%;text-align:center}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:15;display:none;align-items:flex-end}.modalBox{width:100%;max-width:980px;margin:auto;background:#10161f;border:1px solid #303b4a;border-radius:20px 20px 0 0;padding:17px;max-height:88vh;overflow:auto}
 .progress{height:9px;background:#252f3b;border-radius:9px;overflow:hidden}.progress>div{height:100%;background:#e6ebf0}
-.empty{text-align:center;padding:30px 12px;color:#778496}.danger{color:#ff9e91}
+.empty{text-align:center;padding:30px 12px;color:#778496}.danger{color:#ff9e91}.origin-art{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:14px;border:1px solid #334154;background:#0a0e14}.starter-art{width:76px;height:76px;object-fit:cover;border-radius:12px;border:1px solid #3a4655;flex:none}.origin-choice{display:flex;align-items:center;gap:10px;text-align:left}.origin-choice .choice-copy{min-width:0}.test-character{position:relative;min-height:260px;border:1px solid #334454;border-radius:14px;overflow:hidden;background:#090d13;margin:10px 0}.test-character .origin-art{height:260px;aspect-ratio:auto;border:0;border-radius:0;object-fit:cover;object-position:center top}.test-character .art-vignette{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,12,.82),rgba(5,8,12,.05) 55%,rgba(5,8,12,.18));pointer-events:none}.test-character .art-core{position:absolute;left:50%;top:53%;width:22px;height:22px;border-radius:50%;transform:translate(-50%,-50%);background:var(--core);box-shadow:0 0 18px var(--core),0 0 34px var(--core);opacity:.8}.test-character .art-stage{position:absolute;bottom:9px;left:9px}.
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}nav button{font-size:11px}.modal{align-items:center}.modalBox{border-radius:18px}}
 
 /* ===== ASCEND CONTINUOUS TEST BUILD ===== */
@@ -45,6 +45,8 @@ h1,h2,h3{margin:5px 0 10px}h1{font-size:28px}h2{font-size:19px}h3{font-size:14px
 .test-leg{position:absolute;top:136px;width:30px;height:39px;border-radius:8px;background:#1a252e;border:2px solid #81929e}.test-leg.l{left:23px}.test-leg.r{right:23px}
 .test-weapon{position:absolute;right:0;top:60px;width:8px;height:100px;background:linear-gradient(#fff,var(--core));box-shadow:0 0 13px var(--core);transform:rotate(22deg);z-index:5}
 .test-equip{position:absolute;left:9px;top:48px;width:90px;height:105px;border:4px solid #d5e0e6;border-radius:25px;opacity:.28}
+.visual-frame{position:absolute;inset:0;pointer-events:none;border:2px solid var(--visual-accent);border-radius:12px;box-shadow:inset 0 0 35px var(--visual-glow),0 0 18px var(--visual-glow);opacity:.9}.visual-aura{position:absolute;left:50%;top:42%;width:58%;height:72%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse, var(--visual-glow) 0, transparent 68%);filter:blur(7px);opacity:.28;pointer-events:none}.visual-armour{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:54%;height:58%;border:3px solid var(--visual-accent);border-radius:28% 28% 20% 20%;box-shadow:0 0 18px var(--visual-glow),inset 0 0 20px var(--visual-glow);opacity:var(--armour-opacity);pointer-events:none}.visual-armour:after{content:"";position:absolute;left:20%;right:20%;top:18%;height:5px;background:var(--visual-accent);box-shadow:0 18px 0 var(--visual-accent),0 36px 0 var(--visual-accent);opacity:.55}.visual-weapon{position:absolute;right:18%;top:35%;width:8px;height:48%;background:linear-gradient(#fff,var(--visual-accent));border-radius:8px;transform:rotate(18deg);box-shadow:0 0 14px var(--visual-glow);opacity:var(--weapon-opacity);pointer-events:none}.visual-weapon:after{content:"";position:absolute;left:-7px;bottom:-8px;width:22px;height:8px;background:var(--visual-accent);border-radius:5px;box-shadow:0 0 12px var(--visual-glow)}.visual-augment{position:absolute;left:50%;top:52%;width:34px;height:34px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--visual-accent);box-shadow:0 0 20px var(--visual-glow);opacity:var(--augment-opacity);pointer-events:none}.visual-skinwash{position:absolute;inset:0;background:linear-gradient(135deg,var(--skin-wash),transparent 48%,var(--skin-wash));mix-blend-mode:screen;opacity:.22;pointer-events:none}.visual-corebadge{position:absolute;top:9px;right:9px;background:rgba(5,9,14,.75);border:1px solid var(--visual-accent);border-radius:7px;padding:5px 7px;font-size:8px;font-weight:900;color:#fff;letter-spacing:.6px}.visual-loadout{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.visual-chip{font-size:8px;background:#17222d;border:1px solid #334454;border-radius:6px;padding:4px 6px;color:#cbd5df}.skin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.skin-btn{padding:9px;border:1px solid #2c3b4a;background:#111a23;color:#fff;border-radius:9px;text-align:left}.skin-btn.active{border-color:#fff;box-shadow:0 0 0 1px #fff inset}.skin-btn b{display:block;font-size:10px}.skin-btn span{display:block;font-size:8px;color:#8d9aaa;margin-top:2px}
+
 @media(max-width:420px){.test-grid3{grid-template-columns:1fr 1fr}.test-character{height:230px}}
 
 
@@ -108,7 +110,7 @@ const fresh={
  day:1,credits:100,fragments:3,parts:3,shards:0,prime:0,overcore:0,
  drops:3,timed:3,training:6,scavenge:5,practice:5,ranked:3,
  chars:[],inventory:[],history:[],missions:{done:false},rank:0,rating:0,
- team:[],screen:"home",selected:null,battle:null,created:Date.now(),market:[],battleHistory:[],friendTeams:[],testSelected:{a:null,b:null},testMode:"1v1",dropHistory:[]
+ team:[],screen:"home",selected:null,battle:null,created:Date.now(),market:[],battleHistory:[],friendTeams:[],testSelected:{a:null,b:null},testMode:"1v1",dropHistory:[],starterClaimed:false,dailyPity:0,timedPity:0
 };
 let S=load();
 const SAVE_KEY="ASCEND_SAVE";
@@ -123,7 +125,7 @@ async function restorePersistentSave(){
   let best=S,bestAt=Number(S._saveAt||0);
   try{const raw=localStorage.getItem(SAVE_KEY);if(raw){const x=JSON.parse(raw),at=Number(x._saveAt||0);if(at>=bestAt){best=Object.assign({},fresh,x);bestAt=at;}}}catch(e){}
   try{const rec=await new Promise(function(resolve){let done=false;function finish(v){if(!done){done=true;resolve(v)}}const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=function(){if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE,{keyPath:"key"});};req.onsuccess=function(){try{const db=req.result,tx=db.transaction(DB_STORE,"readonly"),g=tx.objectStore(DB_STORE).get(SAVE_KEY);g.onsuccess=function(){finish(g.result||null)};g.onerror=function(){finish(null)};tx.oncomplete=function(){db.close()};}catch(e){finish(null)}};req.onerror=function(){finish(null)};setTimeout(function(){finish(null)},1200);});if(rec&&Number(rec.at||0)>bestAt){const x=JSON.parse(rec.data);best=Object.assign({},fresh,x);}}catch(e){}
-  S=best;ensureFullGame();render();
+  S=best;ensureFullGame();render();setTimeout(checkStarterFlow,250);
 }
 
 function uid(origin){return origin.slice(0,3)+"-"+String(S.chars.length+1).padStart(6,"0")}
@@ -151,13 +153,13 @@ function screen(){switch(S.screen){case"warriors":return warriors();case"actions
 function home(){
  return `<section class="hero"><div class="avatar">✦</div><h1>CORE SYSTEM ONLINE</h1><p class="muted">Build Warriors. Develop them. Master the Core. Your progress persists on this device.</p>
  <button class="btn" onclick="openDrop('daily')" ${S.drops<1?"disabled":""}>OPEN CORE DROP · ${S.drops}/3</button>
- <button class="btn alt" onclick="openDrop('timed')" ${S.timed<1?"disabled":""}>TIMED SUPPLY DROP · ${S.timed}/3</button><p class="tiny" style="margin-top:12px">Drop tables contain resources, materials, equipment, ability cores and occasional Warrior Cores. Opening a drop does not guarantee a Warrior.</p></section>
+ <button class="btn alt" onclick="openDrop('timed')" ${S.timed<1?"disabled":""}>TIMED SUPPLY DROP · ${S.timed}/3</button><p class="tiny" style="margin-top:12px">Drop tables contain resources, materials, equipment, ability cores and occasional Warrior Cores. Your first Warrior is guaranteed separately; later drops use a pity system so you cannot go indefinitely without a Warrior Core.</p></section>
  <div class="grid">${[
  ["WARRIORS",S.chars.length],["AVG POWER",S.chars.length?Math.round(S.chars.reduce((a,c)=>a+power(c),0)/S.chars.length):0],
  ["RANK",RANKS[S.rank]],["RATING",S.rating],["TRAINING",S.training+"/6"],["SCAVENGE",S.scavenge+"/5"]
  ].map(x=>`<div class="card"><div class="muted">${x[0]}</div><h2>${x[1]}</h2></div>`).join("")}</div>
  <div class="card"><h2>DAILY CORE LOOP</h2><div class="stat"><span>Core Drops</span><b>3/day</b></div><div class="stat"><span>Timed Supply Drops</span><b>3/day</b></div><div class="stat"><span>Training</span><b>6/day</b></div><div class="stat"><span>Scavenge</span><b>5/day</b></div><div class="stat"><span>Practice Battles</span><b>5/day</b></div><div class="stat"><span>Ranked Battles</span><b>3/day</b></div></div>
- ${S.chars.length?`<div class="card"><h2>ACTIVE WARRIOR</h2>${miniWarrior(S.chars[S.chars.length-1])}</div>`:""}`;
+ ${S.chars.length?`<div class="card"><h2>ACTIVE WARRIOR</h2>${miniWarrior(S.chars[S.chars.length-1])}</div>`:`<div class="card"><h2>WELCOME, CORE SEEKER</h2><p class="muted">Every new player receives one guaranteed Starter Warrior. It never consumes a Daily Core Drop.</p><button class="btn" onclick="starterModal()">CLAIM STARTER WARRIOR</button></div>`}`;
 }
 function miniWarrior(c){return `<div class="row"><div><div class="avatar">${c.icon}</div></div><div style="flex:1"><div class="origin">${esc(c.origin)} ${esc(c.name)}</div><span class="badge">${c.id}</span><span class="badge">LV ${c.level}</span><span class="badge">POWER ${power(c)}</span><div class="progress"><div style="width:${c.condition}%"></div></div><div class="tiny">Condition ${c.condition}% · Energy ${c.energy}%</div></div></div>`}
 function dropTable(kind){
@@ -168,6 +170,9 @@ function dropTable(kind){
  ];
 }
 function chooseDropType(kind){
+ let pity=kind==="daily"?Number(S.dailyPity||0):Number(S.timedPity||0);
+ let threshold=kind==="daily"?6:5;
+ if(pity>=threshold-1)return "warrior";
  let roll=Math.random()*100,acc=0;
  for(const x of dropTable(kind)){acc+=x[1];if(roll<acc)return x[0]}
  return "resources";
@@ -209,6 +214,7 @@ function openDrop(kind){
  if(kind==="timed"&&S.timed<=0)return;
  if(kind==="daily")S.drops--;else S.timed--;
  let reward=generateDropReward(kind);
+ if(reward.type==="warrior"){if(kind==="daily")S.dailyPity=0;else S.timedPity=0;}else{if(kind==="daily")S.dailyPity=Number(S.dailyPity||0)+1;else S.timedPity=Number(S.timedPity||0)+1;}
  S.dropHistory=S.dropHistory||[];
  S.dropHistory.unshift({day:S.day,kind:kind,type:reward.type});S.dropHistory=S.dropHistory.slice(0,100);
  if(reward.type==="warrior"){S.pending={origin:reward.origin,kind,dropReward:reward};save();namingModal();return}
@@ -222,9 +228,21 @@ function showDropReward(kind,reward){
  else body=`<div class="hero"><div class="avatar">◆</div><div class="muted">REWARD ACQUIRED</div><h1>${esc(reward.title||"CORE REWARD")}</h1>${reward.lines.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`;
  document.getElementById("modalBox").innerHTML=`<div class="test-card"><div class="test-title">${title}</div>${body}<p class="tiny">Warrior Cores are only one possible reward. Drops can also provide resources, materials, equipment and ability cores.</p><button class="btn" onclick="closeModal();render()">CONTINUE</button></div>`;showModal();
 }
+function checkStarterFlow(){
+ if(!S.starterClaimed && S.chars.length===0 && !S.pending){starterModal();}
+}
+function starterModal(){
+ if(S.starterClaimed||S.chars.length)return;
+ let cards=ORIGINS.map(function(o,i){return `<button class="btn alt origin-choice" onclick="chooseStarter(${i})"><img class="starter-art" src="${originArt(o.name)}" alt="${esc(o.name)} 2D artwork"><span class="choice-copy"><b>${esc(o.name)}</b><br><span class="tiny">${esc(o.trait)}</span></span></button>`}).join("");
+ document.getElementById("modalBox").innerHTML=`<div class="hero"><div class="avatar">✦</div><div class="muted">WELCOME TO ASCEND</div><h1>STARTER CORE</h1><p>Choose your first permanent Warrior. This reward is guaranteed and does not use your daily drops.</p></div><h3>Choose your Origin</h3>${cards}`;
+ showModal();
+}
+function chooseStarter(i){
+ let o=ORIGINS[i];S.pending={origin:o,name:o.name,starter:true};namingModal();
+}
 function namingModal(){
  let p=S.pending,o=p.origin;
- document.getElementById("modalBox").innerHTML=`<div class="hero"><div class="avatar">${o.icon}</div><div class="muted">WARRIOR CORE DISCOVERED</div><h1>${o.name}</h1><p>${o.trait}</p><p class="tiny">This drop produced a Warrior Core. Warrior Cores are only one part of the drop system.</p></div>
+ document.getElementById("modalBox").innerHTML=`<div class="hero"><div class="avatar">${o.icon}</div><div class="muted">${p.starter?"STARTER WARRIOR":"WARRIOR CORE DISCOVERED"}</div><h1>${o.name}</h1><p>${o.trait}</p><p class="tiny">${p.starter?"Your first Warrior is guaranteed. This does not consume a drop.":"This drop produced a Warrior Core. Warrior Cores are only one part of the drop system."}</p></div>
  <h3>Choose the permanent Warrior name</h3><input id="warriorName" class="input" maxlength="20" placeholder="e.g. APEX, REX, NOVA">
  <button class="btn" onclick="confirmWarrior()">CREATE WARRIOR</button><button class="btn alt" onclick="closeModal()">CANCEL</button>`;
  showModal();
@@ -232,7 +250,7 @@ function namingModal(){
 function confirmWarrior(){
  let n=document.getElementById("warriorName").value.trim();
  if(!n){toast("Enter a Warrior name");return}
- let c=createWarrior(S.pending.origin,n.toUpperCase());S.pending=null;closeModal();S.selected=c.id;go("warriors");toast(c.origin+" "+c.name+" created");
+ let wasStarter=!!S.pending.starter;let c=createWarrior(S.pending.origin,n.toUpperCase());if(wasStarter){S.starterClaimed=true;c.history.push("Starter Warrior claimed — guaranteed onboarding reward");log("Starter Warrior claimed: "+c.origin+" "+c.name); }S.pending=null;closeModal();S.selected=c.id;go("warriors");toast(c.origin+" "+c.name+" created");
 }
 function showModal(){document.getElementById("modal").style.display="flex"}function closeModal(){document.getElementById("modal").style.display="none";document.getElementById("modalBox").innerHTML=""}
 function warriors(){
@@ -397,14 +415,38 @@ function testCoreColour(c){
   var m={ELEMENTO:"#8bdcff",PYRION:"#ff8c54",AQUION:"#62d8ff",TERRON:"#c8a56c",VYRON:"#ffe66b",UMBRA:"#b78cff",AERIX:"#b9f4ff",VOLTRIX:"#fff078",MECHRON:"#c7d3dc",NEXARA:"#7dffbf"};
   return m[c.origin]||"#8bdcff";
 }
+var ORIGIN_ART={ELEMENTO:"assets/origins2d/elemento.jpg",PYRION:"assets/origins2d/pyrion.jpg",AQUION:"assets/origins2d/aquion.jpg",TERRON:"assets/origins2d/terron.jpg",VYRON:"assets/origins2d/vyron.jpg",UMBRA:"assets/origins2d/umbra.jpg",AERIX:"assets/origins2d/aerix.jpg",VOLTRIX:"assets/origins2d/voltrix.jpg",MECHRON:"assets/origins2d/mechron.jpg",NEXARA:"assets/origins2d/nexara.jpg"};
+function originArt(o){return ORIGIN_ART[o]||"assets/origins2d/elemento.jpg";}
+function stageForVisual(c){return Math.max(1,Math.min(5,Number(c.evolutionStage||stageForLevel(c.level)||1)));}
+function visualSkin(c){return c.visualSkin||'ORIGIN';}
+function visualSkinData(c){
+  var base=testCoreColour(c);
+  var skins={
+    ORIGIN:{name:'ORIGIN',accent:base,wash:base,filter:'none'},
+    CELESTIAL:{name:'CELESTIAL',accent:'#f4e7b0',wash:'#b7d9ff',filter:'brightness(1.08) saturate(1.12)'},
+    VOID:{name:'VOID',accent:'#a878ff',wash:'#5e31a5',filter:'brightness(.82) saturate(1.25)'},
+    INFERNO:{name:'INFERNO',accent:'#ff7148',wash:'#ff2d00',filter:'saturate(1.35) contrast(1.06)'},
+    NEON:{name:'NEON',accent:'#65ffe2',wash:'#00e0ff',filter:'saturate(1.45) brightness(1.04)'},
+    OBSIDIAN:{name:'OBSIDIAN',accent:'#c9d0d8',wash:'#293442',filter:'brightness(.68) contrast(1.22) saturate(.72)'}
+  };
+  return skins[visualSkin(c)]||skins.ORIGIN;
+}
+function visualLoadout(c){
+  var eq=c.equipment||{}, names=[];
+  Object.keys(eq).forEach(function(k){if(eq[k]){var g=S.inventory.find(function(x){return x.id===eq[k]});if(g)names.push(g.name);}});
+  return names;
+}
 function testVisual(c){
-  var stage=(c.level>=50?5:c.level>=25?4:c.level>=10?3:c.level>=5?2:1);
-  var core=testCoreColour(c);
-  return '<div class="test-character" style="--core:'+core+'"><div class="test-body">'+
-    '<div class="test-head"></div><div class="test-eye"></div><div class="test-torso"></div><div class="test-core"></div>'+
-    '<div class="test-arm l"></div><div class="test-arm r"></div><div class="test-leg l"></div><div class="test-leg r"></div>'+
-    (stage>=3?'<div class="test-equip"></div>':'')+(stage>=2?'<div class="test-weapon"></div>':'')+
-    '</div><div class="badge" style="position:absolute;top:9px;left:9px">'+["","ORIGIN","AWAKENED","DEVELOPED","CORE EVOLVED","ASCENDED"][stage]+'</div>'+
+  var stage=stageForVisual(c), core=testCoreColour(c), sk=visualSkinData(c), load=visualLoadout(c);
+  var armour=stage>=2||!!(c.equipment&&c.equipment.armour), weapon=!!(c.equipment&&c.equipment.weapon), augment=!!(c.equipment&&(c.equipment.augment1||c.equipment.augment2||c.equipment.core));
+  var scale=stage===1?'1':stage===2?'1.03':stage===3?'1.06':stage===4?'1.09':'1.12';
+  return '<div class="test-character visual-stage-'+stage+'" style="--core:'+core+';--visual-accent:'+sk.accent+';--visual-glow:'+sk.wash+';--skin-wash:'+sk.wash+';--armour-opacity:'+(armour?'.72':'.08')+';--weapon-opacity:'+(weapon?'.9':'.06')+';--augment-opacity:'+(augment?'.92':'.05')+'">'+
+    '<div class="visual-aura"></div>'+
+    '<img class="origin-art" style="filter:'+sk.filter+';transform:scale('+scale+');transform-origin:center center" src="'+originArt(c.origin)+'" alt="2D '+esc(c.origin)+' Warrior artwork">'+
+    '<div class="visual-skinwash"></div><div class="art-vignette"></div>'+
+    (armour?'<div class="visual-armour"></div>':'')+(weapon?'<div class="visual-weapon"></div>':'')+(augment?'<div class="visual-augment"></div>':'')+
+    '<div class="visual-frame"></div><div class="visual-corebadge">'+esc(sk.name)+' · STAGE '+stage+'</div>'+
+    '<div class="badge art-stage">'+["","ORIGIN","AWAKENED","DEVELOPED","CORE EVOLVED","ASCENDED"][stage]+'</div>'+
     '<div class="badge" style="position:absolute;bottom:9px;right:9px">'+(c.origin||"WARRIOR")+'</div></div>';
 }
 function testCard(c,side){
@@ -578,6 +620,16 @@ function detailedWarriors(){
       '</div>';
     }).join('');
 }
+function setVisualSkin(id,skin){
+  var c=S.chars.find(function(x){return x.id===id});if(!c)return;
+  c.visualSkin=skin;c.history.push('Day '+S.day+': Visual skin changed to '+skin);log(c.name+' changed visual skin to '+skin);save();openWarriorDetails(id);toast(skin+' skin equipped');
+}
+function visualCustomization(c){
+  var skins=['ORIGIN','CELESTIAL','VOID','INFERNO','NEON','OBSIDIAN'];
+  return '<div class="card"><h3>🎨 VISUAL CUSTOMIZATION</h3><p class="muted">Your Warrior appearance now responds to evolution, equipped gear and visual skins. Skins are cosmetic and do not change combat stats.</p>'+
+    '<div class="skin-grid">'+skins.map(function(x){var d=visualSkinData(Object.assign({},c,{visualSkin:x}));return '<button class="skin-btn '+(visualSkin(c)===x?'active':'')+'" style="--skin:'+d.accent+'" onclick="setVisualSkin(\''+c.id+'\',\''+x+'\')"><b>'+x+'</b><span>Visual skin</span></button>';}).join('')+'</div>'+
+    '<div class="visual-loadout">'+(visualLoadout(c).length?visualLoadout(c).map(function(x){return '<span class="visual-chip">⚙ '+esc(x)+'</span>';}).join(''):'<span class="visual-chip">No equipped visual gear</span>')+'</div></div>';
+}
 function openWarriorDetails(id){
   var c=S.chars.find(function(x){return x.id===id});
   if(!c)return;
@@ -628,6 +680,7 @@ function ensureFullGame(){
     if(c.evolutionStage===undefined)c.evolutionStage=1;
     if(c.mastery===undefined)c.mastery=0;
     if(c.potential===undefined)c.potential=100;
+    if(c.visualSkin===undefined)c.visualSkin='ORIGIN';
     if(c.gear&&c.gear.length){
       c.gear.forEach(function(name){
         var g=S.inventory.find(function(x){return x.name===name});
@@ -737,10 +790,20 @@ function tasksScreen(){ensureFullGame();var types=['Training','Scavenge','Mainte
 function develop(){return '<div class="dev-tabs"><button onclick="setDevelop(\'evolve\')" class="'+(S.devTab==='evolve'?'active':'')+'">EVOLVE</button><button onclick="setDevelop(\'abilities\')" class="'+(S.devTab==='abilities'?'active':'')+'">ABILITIES</button><button onclick="setDevelop(\'tasks\')" class="'+(S.devTab==='tasks'?'active':'')+'">TASKS</button></div>'+(S.devTab==='abilities'?abilityLab():S.devTab==='tasks'?tasksScreen():evolveScreen());}
 function setDevelop(x){S.devTab=x;save();render();}
 function inventory(){ensureFullGame();if(!S.inventory.length)return '<div class="card empty"><h2>Inventory Empty</h2><p>Open drops, forge equipment and complete tasks to build your collection.</p><button class="btn" onclick="go(\'home\')">OPEN DROPS</button></div>';return '<div class="card"><h2>INVENTORY · '+S.inventory.length+' ITEMS</h2>'+S.inventory.map(function(g){return '<div class="item-mini"><div class="row"><b>'+esc(g.name)+'</b><span class="stage-pill">'+esc(g.rarity||'Common')+'</span></div><div class="tiny">'+esc(g.type||'Item')+(g.stats?' · '+Object.entries(g.stats).map(function(z){return z[0]+' +'+z[1]}).join(' · '):'')+(g.condition!==undefined?' · Condition '+g.condition+'%':'')+'</div><button class="btn alt" onclick="go(\'warriors\')">SELECT WARRIOR TO EQUIP</button></div>';}).join('')+'</div><button class="btn" onclick="go(\'forge\')">OPEN FORGE</button>'}
+function setVisualSkin(id,skin){
+  var c=S.chars.find(function(x){return x.id===id});if(!c)return;
+  c.visualSkin=skin;c.history.push('Day '+S.day+': Visual skin changed to '+skin);log(c.name+' changed visual skin to '+skin);save();openWarriorDetails(id);toast(skin+' skin equipped');
+}
+function visualCustomization(c){
+  var skins=['ORIGIN','CELESTIAL','VOID','INFERNO','NEON','OBSIDIAN'];
+  return '<div class="card"><h3>🎨 VISUAL CUSTOMIZATION</h3><p class="muted">Your Warrior appearance now responds to evolution, equipped gear and visual skins. Skins are cosmetic and do not change combat stats.</p>'+
+    '<div class="skin-grid">'+skins.map(function(x){var d=visualSkinData(Object.assign({},c,{visualSkin:x}));return '<button class="skin-btn '+(visualSkin(c)===x?'active':'')+'" style="--skin:'+d.accent+'" onclick="setVisualSkin(\''+c.id+'\',\''+x+'\')"><b>'+x+'</b><span>Visual skin</span></button>';}).join('')+'</div>'+
+    '<div class="visual-loadout">'+(visualLoadout(c).length?visualLoadout(c).map(function(x){return '<span class="visual-chip">⚙ '+esc(x)+'</span>';}).join(''):'<span class="visual-chip">No equipped visual gear</span>')+'</div></div>';
+}
 function openWarriorDetails(id){
   var c=S.chars.find(function(x){return x.id===id});if(!c)return;S.selected=id;ensureFullGame();
   var stage=['','ORIGIN','AWAKENED','DEVELOPED','CORE EVOLVED','ASCENDED'][c.evolutionStage||stageForLevel(c.level)];var stats=effectiveStats(c).map(function(v,i){return '<div class="warrior-modal-stat"><span>'+STATN[i]+'</span><b>'+v+'</b></div>'}).join('');var hist=(c.history||[]).slice().reverse().map(function(h){return '<div class="history-row">• '+esc(h)+'</div>'}).join('');
-  document.getElementById('modalBox').innerHTML='<div class="hero">'+testVisual(c)+'<div class="muted">'+esc(c.origin)+' · '+stage+'</div><h1>'+esc(c.name)+'</h1><span class="badge">'+esc(c.id)+'</span><span class="badge">LEVEL '+c.level+'</span><span class="badge">POWER '+testPower(c)+'</span></div><div class="card"><h3>ALL EFFECTIVE STATS</h3><div class="warrior-modal-stats">'+stats+'</div></div><div class="card"><h3>PROGRESSION</h3><div class="stat"><span>XP</span><b>'+c.xp+'/100</b></div><div class="stat"><span>Mastery</span><b>'+c.mastery+'</b></div><div class="stat"><span>Condition</span><b>'+c.condition+'%</b></div><div class="stat"><span>Energy</span><b>'+c.energy+'%</b></div><div class="stat"><span>Wins / Losses</span><b>'+c.wins+' / '+c.losses+'</b></div></div><div class="card"><h3>EQUIPMENT</h3>'+equipmentForWarrior(c)+'</div><div class="card"><h3>ABILITIES</h3><p class="tiny">'+(c.abilities||[]).map(esc).join(' · ')+'</p><button class="btn alt" onclick="closeModal();S.devTab=\'abilities\';go(\'develop\')">OPEN ABILITY LAB</button></div><div class="card"><h3>COMPLETE WARRIOR HISTORY</h3><div class="history-scroll">'+(hist||'<div class="history-row">No history yet.</div>')+'</div></div><button class="btn" onclick="closeModal();render()">CLOSE</button>';
+  document.getElementById('modalBox').innerHTML='<div class="hero">'+testVisual(c)+'<div class="muted">'+esc(c.origin)+' · '+stage+'</div><h1>'+esc(c.name)+'</h1><span class="badge">'+esc(c.id)+'</span><span class="badge">LEVEL '+c.level+'</span><span class="badge">POWER '+testPower(c)+'</span></div><div class="card"><h3>ALL EFFECTIVE STATS</h3><div class="warrior-modal-stats">'+stats+'</div></div><div class="card"><h3>PROGRESSION</h3><div class="stat"><span>XP</span><b>'+c.xp+'/100</b></div><div class="stat"><span>Mastery</span><b>'+c.mastery+'</b></div><div class="stat"><span>Condition</span><b>'+c.condition+'%</b></div><div class="stat"><span>Energy</span><b>'+c.energy+'%</b></div><div class="stat"><span>Wins / Losses</span><b>'+c.wins+' / '+c.losses+'</b></div></div>'+visualCustomization(c)+'<div class="card"><h3>EQUIPMENT</h3>'+equipmentForWarrior(c)+'</div><div class="card"><h3>ABILITIES</h3><p class="tiny">'+(c.abilities||[]).map(esc).join(' · ')+'</p><button class="btn alt" onclick="closeModal();S.devTab=\'abilities\';go(\'develop\')">OPEN ABILITY LAB</button></div><div class="card"><h3>COMPLETE WARRIOR HISTORY</h3><div class="history-scroll">'+(hist||'<div class="history-row">No history yet.</div>')+'</div></div><button class="btn" onclick="closeModal();render()">CLOSE</button>';
   showModal();
 }
 function detailedWarriors(){
